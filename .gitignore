@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# Python
+.venv
+server/vendor
+__pycache__/
+*.py[cod]
+scripts/.export-bodies-tmp
+.tmp-tex-previews/
+
+# Large local kernels / legacy runtime aggregate (never commit)
+public/kernels/spk/**/*.bsp
+public/kernels/spk/runtime/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
