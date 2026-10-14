@@ -106,7 +106,7 @@ export function InfoModal({ open, onClose }: Props) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  NASA&apos;s JPL Horizons System
+                  NASA’s JPL Horizons System
                 </a>
                 . For extrasolar stellar systems, initial conditions are
                 generated from the best available orbital data in the{" "}
@@ -119,6 +119,27 @@ export function InfoModal({ open, onClose }: Props) {
                 </a>
                 . Data for extrasolar systems is necessarily more speculative
                 and less precise that for our own solar system.
+              </p>
+              <p>
+                For questions, comments, or bug reports,{" "}
+                <a href="mailto:unsung.substack@gmail.com">send me an email</a>.
+                If you think this is neat,{" "}
+                <a
+                  href="https://buymeacoffee.com/theunsungpodcast"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  buy me a coffee
+                </a>{" "}
+                or{" "}
+                <a
+                  href="https://theunsungpodcast.substack.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  subscribe to my Substack
+                </a>{" "}
+                where I talk about history.
               </p>
               <div className="info-modal-footer">
                 <button

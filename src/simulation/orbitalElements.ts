@@ -67,10 +67,6 @@ function scale(a: Vec3, s: number): Vec3 {
   return { x: a.x * s, y: a.y * s, z: a.z * s };
 }
 
-function add(a: Vec3, b: Vec3): Vec3 {
-  return { x: a.x + b.x, y: a.y + b.y, z: a.z + b.z };
-}
-
 function sub(a: Vec3, b: Vec3): Vec3 {
   return { x: a.x - b.x, y: a.y - b.y, z: a.z - b.z };
 }
