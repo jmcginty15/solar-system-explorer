@@ -276,31 +276,36 @@ function autoSpeedUnit(simSecondsPerRealSecond: number): SpeedUnit {
 }
 
 function disposeMesh(mesh: Mesh) {
-  mesh.geometry.dispose();
+  // Ring label occluders share geometry/maps with the visible ring mesh.
+  if (!mesh.userData.sharesGeometry) {
+    mesh.geometry.dispose();
+  }
   const { material } = mesh;
   const materials = Array.isArray(material) ? material : [material];
   for (const entry of materials) {
     const maps = new Set<import("three").Texture>();
-    if (
-      entry instanceof MeshBasicMaterial ||
-      entry instanceof MeshStandardMaterial
-    ) {
-      if (entry.map) maps.add(entry.map);
-    }
-    if (entry instanceof MeshStandardMaterial && entry.emissiveMap) {
-      maps.add(entry.emissiveMap);
-    }
-    if (entry instanceof MeshStandardMaterial && entry.metalnessMap) {
-      maps.add(entry.metalnessMap);
-    }
-    if (entry instanceof MeshStandardMaterial && entry.bumpMap) {
-      maps.add(entry.bumpMap);
-    }
-    if (entry instanceof MeshStandardMaterial && entry.displacementMap) {
-      maps.add(entry.displacementMap);
-    }
-    if (entry instanceof MeshStandardMaterial && entry.alphaMap) {
-      maps.add(entry.alphaMap);
+    if (!mesh.userData.sharesMap) {
+      if (
+        entry instanceof MeshBasicMaterial ||
+        entry instanceof MeshStandardMaterial
+      ) {
+        if (entry.map) maps.add(entry.map);
+      }
+      if (entry instanceof MeshStandardMaterial && entry.emissiveMap) {
+        maps.add(entry.emissiveMap);
+      }
+      if (entry instanceof MeshStandardMaterial && entry.metalnessMap) {
+        maps.add(entry.metalnessMap);
+      }
+      if (entry instanceof MeshStandardMaterial && entry.bumpMap) {
+        maps.add(entry.bumpMap);
+      }
+      if (entry instanceof MeshStandardMaterial && entry.displacementMap) {
+        maps.add(entry.displacementMap);
+      }
+      if (entry instanceof MeshStandardMaterial && entry.alphaMap) {
+        maps.add(entry.alphaMap);
+      }
     }
     for (const map of maps) {
       map.dispose();

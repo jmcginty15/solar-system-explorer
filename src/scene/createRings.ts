@@ -29,7 +29,11 @@ import {
   type RingPlanetUmbraState,
 } from "./ringPlaneShadow";
 import { createRoundedWasherGeometry } from "./roundedWasher";
-import { createRingShadowDepthMaterial } from "./shadowDepth";
+import {
+  createRingLabelOccluderMaterial,
+  createRingShadowDepthMaterial,
+  RING_LABEL_OCCLUDER_RENDER_ORDER,
+} from "./shadowDepth";
 import { loadLinearTexture } from "./textures";
 
 const BODY_NORTH = new Vector3(0, 0, 1);
@@ -311,6 +315,22 @@ function enableRingMeshShadows(
     }
   }
   mesh.customDepthMaterial = createRingShadowDepthMaterial(opacity, map);
+
+  // Color pass keeps depthWrite:false for blending; this sibling writes depth
+  // from map×opacity after ring color (see RING_LABEL_OCCLUDER_RENDER_ORDER)
+  // so tags behind rings are occluded without coplanar z-fighting.
+  const occluder = new Mesh(
+    mesh.geometry,
+    createRingLabelOccluderMaterial(opacity, map),
+  );
+  occluder.name = `${mesh.name}-label-occluder`;
+  occluder.renderOrder = RING_LABEL_OCCLUDER_RENDER_ORDER;
+  occluder.frustumCulled = false;
+  occluder.castShadow = false;
+  occluder.receiveShadow = false;
+  occluder.userData.sharesGeometry = true;
+  occluder.userData.sharesMap = true;
+  mesh.add(occluder);
 }
 
 function ringFaceStyles(

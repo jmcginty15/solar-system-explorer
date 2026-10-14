@@ -1,13 +1,24 @@
 import {
   BasicDepthPacking,
   DoubleSide,
+  MeshBasicMaterial,
   MeshDepthMaterial,
+  NoBlending,
   type Material,
   type Mesh,
   type Texture,
   type WebGLProgramParametersWithUniforms,
   type WebGLRenderer,
 } from "three";
+
+/** Fragments below this effective alpha (map × opacity) write neither shadows nor label depth. */
+const RING_ALPHA_CUTOFF = 0.05;
+/**
+ * After ring color (transparent, default order) and before body labels (8–9).
+ * Depth is written only once the rings have already painted, so coplanar
+ * occluder + color meshes cannot z-fight.
+ */
+export const RING_LABEL_OCCLUDER_RENDER_ORDER = 7;
 
 /**
  * Ring casters: DoubleSide (thin washers vanish with BackSide) + linear depth
@@ -21,7 +32,7 @@ export function createRingShadowDepthMaterial(
   const material = new MeshDepthMaterial({
     depthPacking: BasicDepthPacking,
     map: map ?? null,
-    alphaTest: 0.05,
+    alphaTest: RING_ALPHA_CUTOFF,
     opacity: clamped,
     side: DoubleSide,
   });
@@ -44,6 +55,44 @@ export function createRingShadowDepthMaterial(
   };
   material.customProgramCacheKey = () =>
     `ring-shadow-depth-${clamped.toFixed(3)}-${map ? "tex" : "flat"}`;
+  return material;
+}
+
+/**
+ * Main-pass depth only (keeps log-depth). Color-less + alpha-tested so rings
+ * occlude depth-tested tags the same way solid bodies do, gated by ring
+ * opacity / texture alpha.
+ *
+ * Transparent + late renderOrder: runs after ring color (avoids z-fighting with
+ * coplanar geometry) and before labels so the depth buffer is ready for tags.
+ */
+export function createRingLabelOccluderMaterial(
+  opacity: number,
+  map: Texture | undefined,
+): MeshBasicMaterial {
+  const clamped = Math.min(1, Math.max(0, opacity));
+  const material = new MeshBasicMaterial({
+    map: map ?? null,
+    opacity: clamped,
+    alphaTest: RING_ALPHA_CUTOFF,
+    transparent: true,
+    blending: NoBlending,
+    colorWrite: false,
+    depthWrite: true,
+    depthTest: true,
+    side: DoubleSide,
+  });
+  material.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      "#include <map_fragment>",
+      /* glsl */ `
+      #include <map_fragment>
+      diffuseColor.a *= opacity;
+      `,
+    );
+  };
+  material.customProgramCacheKey = () =>
+    `ring-label-occlude-${clamped.toFixed(3)}-${map ? "tex" : "flat"}`;
   return material;
 }
 
