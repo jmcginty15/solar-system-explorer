@@ -188,7 +188,8 @@ export type StellarSystemId =
   | "hd-110067"
   | "hd-10180"
   | "hd-219134"
-  | "kepler-90";
+  | "kepler-90"
+  | "hd-80606";
 
 /**
  * Catalog two-body Keplerian elements about the system primary (SI units).
@@ -407,6 +408,9 @@ export type BodyId =
   | "kepler90g"
   | "kepler90h"
   | "kepler90i"
+  | "hd80606"
+  | "hd80606b"
+  | "hd80607"
   | "mercury"
   | "venus"
   | "earth"

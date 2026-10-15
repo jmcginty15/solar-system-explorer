@@ -45,6 +45,9 @@ import {
   parseDatetimeLocal,
   stepTidalLockOrientation,
   bodyStateFromKeplerianElements,
+  clearExoplanetFrameCache,
+  exoplanetSceneBasis,
+  hd80606BinaryStatesInScene,
   transformStateToInvariable,
   type BodyState,
   type ErrorReport,
@@ -59,16 +62,20 @@ import {
   type OrbitId,
 } from "./scene/orbitEllipses";
 import {
+  alignSolScaleElementsToSubsystemPlane,
   attachSolScaleReferenceOrbit,
+  hd80606SubsystemOrientation,
   solPlanetHeliocentricElementsAtEpoch,
   solScaleReferenceBodyId,
+  solScaleReferenceCenterBodyId,
+  solScaleReferenceLodMemberId,
   type SolScaleReferenceOrbit,
 } from "./scene/solScaleReferenceOrbit";
 import {
-  CAMERA_FAR_M,
+  cameraFarM,
+  cameraMaxDistanceM,
   CAMERA_HORIZONTAL_FOV_DEG,
   CAMERA_LOG_ZOOM_SPEED,
-  CAMERA_MAX_DISTANCE_M,
   INVARIABLE_UP,
   STARLIGHT_AMBIENT_COLOR,
   STARLIGHT_AMBIENT_INTENSITY,
@@ -624,7 +631,9 @@ export default function App() {
     let skybox: Mesh | null = null;
     let minDistanceM = 2 * Math.max(maxRadiusM(systemStarId), 1);
     let minLogDistance = Math.log(minDistanceM);
-    const maxLogDistance = Math.log(CAMERA_MAX_DISTANCE_M);
+    const systemCameraMaxDistanceM = cameraMaxDistanceM(stellarSystemId);
+    const systemCameraFarM = cameraFarM(stellarSystemId);
+    const maxLogDistance = Math.log(systemCameraMaxDistanceM);
 
     let nbodyBodies: NbodyBody[] = [];
     let bodyGroups = new Map<BodyId, Group>();
@@ -652,6 +661,30 @@ export default function App() {
       lastInfoPositionsPublishMs = now;
       setInfoBodyPositions({ ...livePositionsRef.current });
       setInfoSimJulianDate(simJulianDateRef.current);
+    };
+
+    const updateSolScaleReferenceCenter = (bodies: readonly NbodyBody[]) => {
+      if (!solScaleReferenceOrbit || bodies.length === 0) return;
+      const centerBodyId = solScaleReferenceCenterBodyId(stellarSystemId);
+      const centerBody = centerBodyId
+        ? bodies.find((body) => body.id === centerBodyId)
+        : null;
+      if (centerBody) {
+        solScaleReferenceOrbit.setCenter(
+          centerBody.state.positionM.x,
+          centerBody.state.positionM.y,
+          centerBody.state.positionM.z,
+        );
+        return;
+      }
+      const bary = solarSystemBarycenterFrame(bodies);
+      if (bary) {
+        solScaleReferenceOrbit.setCenter(
+          bary.positionM.x,
+          bary.positionM.y,
+          bary.positionM.z,
+        );
+      }
     };
 
     const seedDefaultVisibility = (
@@ -744,7 +777,7 @@ export default function App() {
       verticalFovFromHorizontal(CAMERA_HORIZONTAL_FOV_DEG, aspect),
       aspect,
       1_000,
-      CAMERA_FAR_M,
+      systemCameraFarM,
     );
     camera.up.set(INVARIABLE_UP.x, INVARIABLE_UP.y, INVARIABLE_UP.z);
 
@@ -787,7 +820,7 @@ export default function App() {
     controls.enableDamping = true;
     controls.enableZoom = false;
     controls.enabled = false;
-    controls.maxDistance = CAMERA_MAX_DISTANCE_M;
+    controls.maxDistance = systemCameraMaxDistanceM;
 
     const positionFor = (bodyId: BodyId): BodyPositionM | null =>
       livePositionsRef.current[bodyId] ?? null;
@@ -996,15 +1029,13 @@ export default function App() {
           viewportHeightPx,
         });
         if (solScaleReferenceOrbit) {
-          const bary = solarSystemBarycenterFrame(nbodyBodies);
-          if (bary) {
-            solScaleReferenceOrbit.setCenter(
-              bary.positionM.x,
-              bary.positionM.y,
-              bary.positionM.z,
-            );
-          }
-          solScaleReferenceOrbit.update(camera, viewportHeightPx);
+          updateSolScaleReferenceCenter(nbodyBodies);
+          solScaleReferenceOrbit.update(
+            camera,
+            viewportHeightPx,
+            nbodyBodies,
+            solScaleReferenceLodMemberId(stellarSystemId),
+          );
         }
       }
       updateCameraClipPlanes(
@@ -1095,6 +1126,8 @@ export default function App() {
       setSimReady(false);
       setAssetsReady(false);
       controls.enabled = false;
+      // Drop any stale ICRF→scene basis (e.g. from before the binary pole fix).
+      clearExoplanetFrameCache();
 
       try {
         const d = daysFromJ2000(jd);
@@ -1124,6 +1157,67 @@ export default function App() {
               d,
               T,
             ).wDeg;
+          }
+        } else if (stellarSystemId === "hd-80606") {
+          // Wide binary from Earth-viewed astrometry; planets Keplerian about
+          // HD 80606, then the whole set is shifted to the system COM.
+          const host = BODIES.hd80606;
+          const binaryStates = hd80606BinaryStatesInScene(
+            exoplanetSceneBasis(stellarSystemId).icrfToScene,
+          );
+          for (const bodyId of bodyIds) {
+            const body = BODIES[bodyId];
+            if (!body) continue;
+
+            let state: BodyState | null = binaryStates[bodyId] ?? null;
+            if (
+              !state &&
+              body.keplerianElements &&
+              host &&
+              binaryStates.hd80606
+            ) {
+              const relative = bodyStateFromKeplerianElements(
+                body.keplerianElements,
+                host.mass,
+                body.mass,
+                jd,
+                stellarSystemId,
+              );
+              if (!relative) {
+                console.warn(
+                  `Keplerian state failed for "${bodyId}"; omitting body`,
+                );
+                continue;
+              }
+              const hostState = binaryStates.hd80606;
+              state = {
+                positionM: {
+                  x: hostState.positionM.x + relative.positionM.x,
+                  y: hostState.positionM.y + relative.positionM.y,
+                  z: hostState.positionM.z + relative.positionM.z,
+                },
+                velocityMS: {
+                  x: hostState.velocityMS.x + relative.velocityMS.x,
+                  y: hostState.velocityMS.y + relative.velocityMS.y,
+                  z: hostState.velocityMS.z + relative.velocityMS.z,
+                },
+              };
+            }
+            if (!state) continue;
+
+            states[bodyId] = state;
+            livePositions[bodyId] = state.positionM;
+            orientations[bodyId] = orientationQuaternionForBody(body, d, T);
+            atmospherePrimeMeridianDeg[bodyId] = evaluateIauOrientation(
+              body.iauOrientation,
+              d,
+              T,
+            ).wDeg;
+          }
+          parkStarAtBarycenter(states, systemStarId, { pinPrimary: false });
+          for (const bodyId of Object.keys(states) as BodyId[]) {
+            const state = states[bodyId];
+            if (state) livePositions[bodyId] = state.positionM;
           }
         } else {
           // Non-SPK systems (e.g. TRAPPIST-1): primary at the origin;
@@ -1284,15 +1378,19 @@ export default function App() {
               await solPlanetHeliocentricElementsAtEpoch(referenceBodyId, jd);
             if (cancelled || generation !== loadGeneration) return;
             if (referenceElements) {
-              solScaleReferenceOrbit.setElements(referenceElements);
-              const bary = solarSystemBarycenterFrame(nbodyBodies);
-              if (bary) {
-                solScaleReferenceOrbit.setCenter(
-                  bary.positionM.x,
-                  bary.positionM.y,
-                  bary.positionM.z,
-                );
-              }
+              const subsystem =
+                stellarSystemId === "hd-80606"
+                  ? hd80606SubsystemOrientation(nbodyBodies)
+                  : null;
+              solScaleReferenceOrbit.setElements(
+                subsystem
+                  ? alignSolScaleElementsToSubsystemPlane(
+                      referenceElements,
+                      subsystem,
+                    )
+                  : referenceElements,
+              );
+              updateSolScaleReferenceCenter(nbodyBodies);
             } else {
               solScaleReferenceOrbit.setVisible(false);
             }

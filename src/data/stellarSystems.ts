@@ -73,6 +73,15 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
       usesSpk: false,
       forceSummationOnly: true,
     },
+    "hd-80606": {
+      id: "hd-80606",
+      name: "HD 80606/HD 80607",
+      primaryBodyId: "hd80606",
+      defaultFocusId: "hd-80606-system",
+      usesSpk: false,
+      // Hierarchical: both stars are unbound primaries about the binary COM;
+      // HD 80606 b is a Kepler moon of HD 80606 (not full pairwise N-body).
+    },
   };
 
 /**
@@ -83,6 +92,10 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
 export function simSpeedMaxSeconds(systemId: StellarSystemId): number {
   if (systemId === "sol") {
     return 164.79132 * 365.25 * 86_400;
+  }
+  if (systemId === "hd-80606") {
+    // Lazy import avoided: period from astrometric two-body energy (~31 kyr).
+    return 983_780_042_928;
   }
   let maxPeriodS = 0;
   for (const body of bodiesForStellarSystem(systemId)) {
@@ -99,6 +112,7 @@ export const STELLAR_SYSTEM_ORDER: readonly StellarSystemId[] = [
   "hd-10180",
   "hd-219134",
   "kepler-90",
+  "hd-80606",
 ] as const;
 
 export const DEFAULT_STELLAR_SYSTEM_ID: StellarSystemId = "sol";

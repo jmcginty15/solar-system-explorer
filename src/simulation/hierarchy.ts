@@ -28,6 +28,8 @@ export type HierarchyStateBody = {
  * Seeds dynamic `parentId` and serves as a camera fallback.
  */
 export function catalogOrbitalParentId(bodyId: BodyId): BodyId | null {
+  // Hot Jupiter bound to its host in the HD 80606/07 binary (host is a star).
+  if (bodyId === "hd80606b") return "hd80606";
   switch (BODIES[bodyId].type) {
     case "terrestrial-satellite":
       return "earth";
@@ -129,7 +131,17 @@ function isEligibleParent(
   childParentId: BodyId | null,
   centralStarId: BodyId,
 ): boolean {
-  if (parent.id === child.id || parent.id === centralStarId) return false;
+  if (parent.id === child.id) return false;
+  // The designated central star is not a capture target — except when the
+  // catalog (or a live bind) already places the child under that star, e.g.
+  // HD 80606 b orbiting host HD 80606 in a stellar binary.
+  if (
+    parent.id === centralStarId &&
+    childParentId !== parent.id &&
+    catalogOrbitalParentId(child.id) !== parent.id
+  ) {
+    return false;
+  }
   // Only top-level bodies can host satellites (single-level hierarchy).
   if (parentParentId !== null) return false;
   if (parent.mass >= MIN_PARENT_MASS_RATIO * child.mass) return true;
@@ -139,19 +151,41 @@ function isEligibleParent(
   return false;
 }
 
+/**
+ * External mass for a parent's Hill sphere. Normally the central star; when
+ * the parent *is* that star (binary host with a bound planet), use the most
+ * massive other body (the companion) so R_Hill is well-defined.
+ */
+function hillExternalBody(
+  parent: HierarchyStateBody,
+  centralStar: HierarchyStateBody,
+  bodies: readonly HierarchyStateBody[],
+): HierarchyStateBody {
+  if (parent.id !== centralStar.id) return centralStar;
+  let best: HierarchyStateBody | undefined;
+  for (const body of bodies) {
+    if (body.id === parent.id || !(body.mass > 0)) continue;
+    if (!best || body.mass > best.mass) best = body;
+  }
+  return best ?? centralStar;
+}
+
 function stillBoundToParent(
   parent: HierarchyStateBody,
   child: HierarchyStateBody,
-  sun: HierarchyStateBody,
+  centralStar: HierarchyStateBody,
+  bodies: readonly HierarchyStateBody[],
 ): boolean {
   const { r, eps } = twoBodySpecificEnergy(parent, child);
   if (!(r > 0)) return false;
+  const external = hillExternalBody(parent, centralStar, bodies);
+  if (external.id === parent.id) return eps < 0;
   const a = Math.hypot(
-    parent.state.positionM.x - sun.state.positionM.x,
-    parent.state.positionM.y - sun.state.positionM.y,
-    parent.state.positionM.z - sun.state.positionM.z,
+    parent.state.positionM.x - external.state.positionM.x,
+    parent.state.positionM.y - external.state.positionM.y,
+    parent.state.positionM.z - external.state.positionM.z,
   );
-  const rH = hillRadiusM(parent.mass, a, sun.mass);
+  const rH = hillRadiusM(parent.mass, a, external.mass);
   if (!(rH > 0)) return false;
   // Clearly outside the Hill sphere → real unbind / ejection.
   if (r > HILL_UNBIND_FRACTION * rH) return false;
@@ -165,16 +199,19 @@ function stillBoundToParent(
 function canBindToParent(
   parent: HierarchyStateBody,
   child: HierarchyStateBody,
-  sun: HierarchyStateBody,
+  centralStar: HierarchyStateBody,
+  bodies: readonly HierarchyStateBody[],
 ): { ok: boolean; eps: number } {
   const { r, eps } = twoBodySpecificEnergy(parent, child);
   if (!(r > 0) || !(eps < 0)) return { ok: false, eps };
+  const external = hillExternalBody(parent, centralStar, bodies);
+  if (external.id === parent.id) return { ok: false, eps };
   const a = Math.hypot(
-    parent.state.positionM.x - sun.state.positionM.x,
-    parent.state.positionM.y - sun.state.positionM.y,
-    parent.state.positionM.z - sun.state.positionM.z,
+    parent.state.positionM.x - external.state.positionM.x,
+    parent.state.positionM.y - external.state.positionM.y,
+    parent.state.positionM.z - external.state.positionM.z,
   );
-  const rH = hillRadiusM(parent.mass, a, sun.mass);
+  const rH = hillRadiusM(parent.mass, a, external.mass);
   if (!(rH > 0)) return { ok: false, eps };
   return { ok: r < HILL_BIND_FRACTION * rH, eps };
 }
@@ -218,7 +255,7 @@ export function updateOrbitalParents(bodies: HierarchyStateBody[]): void {
         currentId,
         centralStarId,
       ) &&
-      stillBoundToParent(currentParent, child, centralStar)
+      stillBoundToParent(currentParent, child, centralStar, bodies)
     ) {
       child.parentId = currentParent.id;
       continue;
@@ -239,7 +276,7 @@ export function updateOrbitalParents(bodies: HierarchyStateBody[]): void {
       ) {
         continue;
       }
-      const { ok, eps } = canBindToParent(parent, child, centralStar);
+      const { ok, eps } = canBindToParent(parent, child, centralStar, bodies);
       if (!ok) continue;
       if (eps < bestEps) {
         bestEps = eps;

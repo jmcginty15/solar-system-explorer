@@ -2,6 +2,11 @@ import { BODIES, type BodyId } from "../data";
 import type { BodyState } from "../ephemeris";
 import { catalogOrbitalParentId, updateOrbitalParents } from "./hierarchy";
 import { keplerPropagate } from "./kepler";
+import { meanToTrueAnomaly, trueToMeanAnomaly } from "./keplerAnomalies";
+import {
+  classicalElementsToState,
+  stateToClassicalElements,
+} from "./orbitalElements";
 
 /** CODATA 2018 gravitational constant (m³ kg⁻¹ s⁻²). */
 export const G = 6.674_3e-11;
@@ -281,7 +286,23 @@ function scrubNumericalHyperbola(
   return { r, v: { x: v.x * s, y: v.y * s, z: v.z * s } };
 }
 
-/** Advance a Keplerian relative state, substepping long spans of multi-rev dt. */
+const TWO_PI = 2 * Math.PI;
+
+function wrapTwoPi(angleRad: number): number {
+  const a = angleRad % TWO_PI;
+  return a < 0 ? a + TWO_PI : a;
+}
+
+/**
+ * Advance a Keplerian relative state over `dt`.
+ *
+ * Bound elliptic orbits advance by mean anomaly in one shot — required when
+ * frame steps span hundreds–thousands of revolutions (e.g. HD 80606 b while
+ * the binary is viewed at kyr/s). Chaining universal-variable substeps that
+ * long accumulates error and unbinds high-e moons.
+ *
+ * Hyperbolic / degenerate states still use universal-variable substeps.
+ */
 function keplerPropagateSubstepped(
   r0: Vec3,
   v0: Vec3,
@@ -290,6 +311,34 @@ function keplerPropagateSubstepped(
   period: number,
 ): { position: Vec3; velocity: Vec3 } {
   const scrubbed = scrubNumericalHyperbola(r0, v0, mu);
+
+  const elements = stateToClassicalElements(scrubbed.r, scrubbed.v, mu);
+  if (
+    elements &&
+    elements.eccentricity >= 0 &&
+    elements.eccentricity < 1 &&
+    Number.isFinite(elements.semiMajorAxisM) &&
+    elements.semiMajorAxisM > 0
+  ) {
+    const a = elements.semiMajorAxisM;
+    const n = Math.sqrt(mu / (a * a * a));
+    if (Number.isFinite(n) && n > 0) {
+      const mean0 = trueToMeanAnomaly(
+        elements.trueAnomalyRad,
+        elements.eccentricity,
+      );
+      const mean1 = wrapTwoPi(mean0 + n * dt);
+      const true1 = meanToTrueAnomaly(mean1, elements.eccentricity);
+      const next = classicalElementsToState(
+        { ...elements, trueAnomalyRad: true1 },
+        mu,
+      );
+      if (next) {
+        return { position: next.positionM, velocity: next.velocityMS };
+      }
+    }
+  }
+
   const maxDt =
     period < Number.POSITIVE_INFINITY && period > 0
       ? MAX_KEPLER_DT_ORBIT_FRACTION * period
@@ -316,6 +365,22 @@ function circularOrbitalPeriodSeconds(rMag: number, mu: number): number {
   return 2 * Math.PI * Math.sqrt((rMag * rMag * rMag) / mu);
 }
 
+/** Osculating elliptic period from a, else circular period at |r|. */
+function orbitalPeriodSeconds(r: Vec3, v: Vec3, mu: number): number {
+  const elements = stateToClassicalElements(r, v, mu);
+  if (
+    elements &&
+    elements.eccentricity >= 0 &&
+    elements.eccentricity < 1 &&
+    Number.isFinite(elements.semiMajorAxisM) &&
+    elements.semiMajorAxisM > 0
+  ) {
+    const a = elements.semiMajorAxisM;
+    return 2 * Math.PI * Math.sqrt((a * a * a) / mu);
+  }
+  return circularOrbitalPeriodSeconds(Math.hypot(r.x, r.y, r.z), mu);
+}
+
 /**
  * Propagate a system-member state about the system barycenter
  * (Kepler with barycentric μ + capped tidal kicks).
@@ -336,7 +401,9 @@ function propagateAboutBarycenter(
   }
   const scrubbed = scrubNumericalHyperbola(r0, v0, mu);
   const rMag = Math.hypot(scrubbed.r.x, scrubbed.r.y, scrubbed.r.z);
-  const period = circularOrbitalPeriodSeconds(rMag, mu);
+  // Use osculating a for eccentric moons — circular-at-|r| underestimates P
+  // near periapsis and opens the tidal-kick path at unsafe frame steps.
+  const period = orbitalPeriodSeconds(scrubbed.r, scrubbed.v, mu);
   const centralAccel = rMag > 0 ? mu / (rMag * rMag) : 0;
   const tideCap = TIDAL_ACCEL_CAP_FRACTION * centralAccel;
 
@@ -464,13 +531,15 @@ export type StepNbodyOptions = {
 };
 
 /**
- * Park `starId` at the system barycenter with zero velocity after heliocentric
- * Keplerian initial conditions. Planet states are shifted into the barycentric
- * frame first; the star is then pinned to the origin at rest.
+ * Shift all states into the system barycentric frame. When `pinPrimary` is
+ * true (default), park `starId` at the origin at rest afterward — appropriate
+ * for single-star Keplerian systems. Binary / multi-star systems pass
+ * `pinPrimary: false` so every star keeps its COM-relative reflex motion.
  */
 export function parkStarAtBarycenter(
   states: Partial<Record<BodyId, BodyState>>,
   starId: BodyId,
+  options?: { pinPrimary?: boolean },
 ): void {
   const ids = Object.keys(states) as BodyId[];
   if (ids.length === 0 || !states[starId]) return;
@@ -514,6 +583,8 @@ export function parkStarAtBarycenter(
     state.velocityMS.y -= comVy;
     state.velocityMS.z -= comVz;
   }
+
+  if (options?.pinPrimary === false) return;
 
   const star = states[starId]!;
   star.positionM.x = 0;

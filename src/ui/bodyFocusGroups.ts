@@ -640,11 +640,8 @@ export function buildBodyFocusGroups(
     groups.push({
       id: "star",
       label: stars.length === 1 ? "Star" : "Stars",
-      entries: stars.map((body) => ({
-        body,
-        systemHeader: null,
-        children: [],
-      })),
+      // Stars may host bound planets (e.g. HD 80606 + b) — nest like planets.
+      entries: withSystems(stars),
     });
   }
   if (planets.length) {

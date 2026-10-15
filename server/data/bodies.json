@@ -208,7 +208,7 @@
             },
             {
               "angle": "N2",
-              "sinCoeff": 0.00003
+              "sinCoeff": 3e-05
             }
           ]
         },
@@ -243,7 +243,7 @@
         },
         "northPoleDec": {
           "constant": 66.76063,
-          "perCentury": -0.00006
+          "perCentury": -6e-05
         },
         "primeMeridian": {
           "constant": 170.65,
@@ -948,7 +948,7 @@
     },
     "kagara": {
       "id": "kagara",
-      "name": "469705 ǂKá̦gára (2005 EF298)",
+      "name": "469705 \u01c2K\u00e1\u0326g\u00e1ra (2005 EF298)",
       "radiusXM": 69000,
       "radiusYM": 69000,
       "radiusZM": 69000,
@@ -1178,7 +1178,7 @@
             },
             {
               "angle": "J4",
-              "cosCoeff": 0.00006
+              "cosCoeff": 6e-05
             },
             {
               "angle": "J5",
@@ -2166,7 +2166,7 @@
         "primeMeridian": {
           "constant": 35.06,
           "perDay": 1128.844585,
-          "perDaySquared": 8.864e-9,
+          "perDaySquared": 8.864e-09,
           "periodic": [
             {
               "angle": "M1",
@@ -15078,7 +15078,7 @@
     },
     "haunu": {
       "id": "haunu",
-      "name": "ǃHãunu (ǂKá̦gára I)",
+      "name": "\u01c3H\u00e3unu (\u01c2K\u00e1\u0326g\u00e1ra I)",
       "radiusXM": 61000,
       "radiusYM": 61000,
       "radiusZM": 61000,
@@ -16906,6 +16906,104 @@
           "perDay": 864
         }
       }
+    },
+    "hd80606": {
+      "id": "hd80606",
+      "name": "HD 80606",
+      "radiusXM": 730485000,
+      "radiusYM": 730485000,
+      "radiusZM": 730485000,
+      "textureMapUrl": "sun-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 0.9,
+      "spectralType": "G8V",
+      "starColor": 16772058,
+      "color": 16771028,
+      "stellarSystemId": "hd-80606",
+      "type": "star",
+      "mass": 2.08789875e+30,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 322.1334428942284
+        },
+        "northPoleDec": {
+          "constant": 21.76940020919479
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 6.099126
+        }
+      }
+    },
+    "hd80607": {
+      "id": "hd80607",
+      "name": "HD 80607",
+      "radiusXM": 695700000,
+      "radiusYM": 695700000,
+      "radiusZM": 695700000,
+      "textureMapUrl": "sun-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 0.8,
+      "spectralType": "G8V",
+      "starColor": 16771028,
+      "color": 16770000,
+      "stellarSystemId": "hd-80606",
+      "type": "star",
+      "mass": 1.988475e+30,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 322.1334428942284
+        },
+        "northPoleDec": {
+          "constant": 21.76940020919479
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 9.961905
+        }
+      }
+    },
+    "hd80606b": {
+      "id": "hd80606b",
+      "name": "HD 80606 b",
+      "radiusXM": 73775616.0,
+      "radiusYM": 73775616.0,
+      "radiusZM": 73775616.0,
+      "color": 12868136,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "hd-80606",
+      "type": "gas-giant",
+      "mass": 7.904252979e+27,
+      "tidallyLocked": false,
+      "keplerianElements": {
+        "semiMajorAxisM": 68859899883.21,
+        "eccentricity": 0.93183,
+        "inclinationRad": 1.5575318244797396,
+        "argPeriapsisRad": 5.2554132705576855,
+        "periodS": 9628136.496,
+        "transitJd": 2458888.07466,
+        "transitDurationS": 43128.0,
+        "periastronJd": 2458882.344,
+        "radialVelocityAmplitudeMS": 469.22,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 322.1334428942284
+        },
+        "northPoleDec": {
+          "constant": 21.76940020919479
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 92.90322580645162
+        }
+      }
     }
   },
   "catalogOrder": [
@@ -16948,6 +17046,9 @@
     "kepler90f",
     "kepler90g",
     "kepler90h",
+    "hd80606",
+    "hd80606b",
+    "hd80607",
     "mercury",
     "venus",
     "earth",

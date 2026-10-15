@@ -37,6 +37,17 @@ export {
   kepler90DirectionFromSolIcrf,
 } from "./kepler90Frame";
 export {
+  HD80606_DEC_DEG,
+  HD80606_DISTANCE_LY,
+  HD80606_RA_DEG,
+  HD80606_SYSTEM_DISTANCE_LY,
+  HD80607_DEC_DEG,
+  HD80607_DISTANCE_LY,
+  HD80607_RA_DEG,
+  hd80606BinaryStatesInScene,
+  hd80606DirectionFromSolIcrf,
+} from "./hd80606Frame";
+export {
   buildExoplanetSceneBasis,
   clearExoplanetFrameCache,
   exoplanetDirectionFromSolIcrf,

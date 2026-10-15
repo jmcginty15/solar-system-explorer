@@ -33,6 +33,8 @@ function systemBlurb(id: StellarSystemId): string {
       return "Orange dwarf star about 21.3 light-years away in the constellation Cassiopeia. Host of a compact multi-planet system including two known transiting rocky worlds.";
     case "kepler-90":
       return "F-type star about 2,790 light-years away in the constellation Draco. Host of an eight-planet system with the same planet count as our Solar System, all closer to their star than Earth is to our Sun.";
+    case "hd-80606":
+      return "Wide G8V binary about 215 light-years away in Ursa Major. HD 80606 hosts a highly eccentric hot Jupiter.";
   }
 }
 

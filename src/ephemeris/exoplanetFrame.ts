@@ -19,6 +19,10 @@ import { G } from "../simulation/nbody";
 import { hd10180DirectionFromSolIcrf } from "./hd10180Frame";
 import { hd110067DirectionFromSolIcrf } from "./hd110067Frame";
 import { hd219134DirectionFromSolIcrf } from "./hd219134Frame";
+import {
+  hd80606BinaryOrbitalPoleIcrf,
+  hd80606DirectionFromSolIcrf,
+} from "./hd80606Frame";
 import { kepler90DirectionFromSolIcrf } from "./kepler90Frame";
 import { trappist1DirectionFromSolIcrf } from "./trappist1Frame";
 
@@ -58,6 +62,8 @@ export function exoplanetDirectionFromSolIcrf(
       return hd219134DirectionFromSolIcrf();
     case "kepler-90":
       return kepler90DirectionFromSolIcrf();
+    case "hd-80606":
+      return hd80606DirectionFromSolIcrf();
     case "sol":
       return new Vector3(1, 0, 0);
   }
@@ -115,8 +121,15 @@ export function skyOrbitalPoleIcrf(
 /**
  * Mass-weighted invariable pole for an exoplanet system from catalog Keplerians.
  * Falls back to the sky-frame +Z (toward observer) when no planets are present.
+ *
+ * HD 80606/07: always the binary orbital pole so scene XY is the stellar
+ * invariable plane (the hot Jupiter is inclined relative to that plane).
  */
 export function systemInvariablePoleIcrf(systemId: StellarSystemId): Vector3 {
+  if (systemId === "hd-80606") {
+    return hd80606BinaryOrbitalPoleIcrf();
+  }
+
   const direction = exoplanetDirectionFromSolIcrf(systemId);
   const starId = primaryStarId(systemId);
   const starMass = BODIES[starId]?.mass ?? 0;
@@ -136,7 +149,6 @@ export function systemInvariablePoleIcrf(systemId: StellarSystemId): Vector3 {
   }
 
   if (L.lengthSq() < 1e-60) {
-    // No planets yet — face the observer (sky +Z).
     return direction.clone().multiplyScalar(-1).normalize();
   }
 

@@ -18,7 +18,8 @@ export type StellarBarycenterFocusId =
   | "hd-110067-system"
   | "hd-10180-system"
   | "hd-219134-system"
-  | "kepler-90-system";
+  | "kepler-90-system"
+  | "hd-80606-system";
 
 export type SystemFocusId = StellarBarycenterFocusId | `${BodyId}-system`;
 
@@ -33,6 +34,7 @@ const STELLAR_BARYCENTER_FOCUS_IDS = new Set<string>([
   "hd-10180-system",
   "hd-219134-system",
   "kepler-90-system",
+  "hd-80606-system",
 ]);
 
 /** Whole-star-system barycenter (all bodies), not a planet–moon COM. */
@@ -63,6 +65,8 @@ export function stellarBarycenterFocusId(
       return "hd-219134-system";
     case "kepler-90":
       return "kepler-90-system";
+    case "hd-80606":
+      return "hd-80606-system";
   }
 }
 
@@ -205,7 +209,10 @@ export function defaultPlanetarySystemVisibleIds(
   );
   const ids: FocusId[] = [];
   for (const id of bodyIds) {
-    if (available.has(id) && BODIES[id]?.type === "star") ids.push(id);
+    if (!(available.has(id) && BODIES[id]?.type === "star")) continue;
+    // Star that hosts bound planets/moons: show the subsystem orbit by default.
+    const systemId = systemFocusIdForPrimary(id);
+    ids.push(activeSystems.has(systemId) ? systemId : id);
   }
   for (const id of systemPrimaryBodyIds(bodyIds)) {
     const parent = parentByBody
@@ -356,6 +363,8 @@ export function primaryHasBoundSatellites(
  * Reference barycenter for a body's osculating orbit:
  * - bound satellite → parent planetary-system COM
  * - primary with bound moons → its own planetary-system COM
+ *   (e.g. HD 80606’s reflex about the HD 80606+b COM — same as Pluto–Charon;
+ *   the wide binary motion is the `hd80606-system` ellipse about the stellar COM)
  * - otherwise (lone heliocentric body / Sun) → solar-system COM
  */
 export function orbitReferenceBarycenter(

@@ -32,11 +32,20 @@ import {
   fetchAllSpkStates,
   transformStateToInvariable,
 } from "../ephemeris";
+import {
+  satelliteOrbitAboutPlanetarySystem,
+  type NbodyBody,
+} from "../simulation";
 import { G } from "../simulation/nbody";
 import {
   stateToClassicalElements,
   type ClassicalOrbitalElements,
 } from "../simulation/orbitalElements";
+import {
+  computeSystemLodStates,
+  systemOrbitMemberLodWeight,
+  systemTagLodWeights,
+} from "./systemLod";
 
 const ELLIPSE_SEGMENTS = 1024;
 /** World-space dash/gap at Mercury's scale (~100 marks around the orbit). */
@@ -48,6 +57,10 @@ const REFERENCE_COLOR_HEX = 0xb8b0a4;
 const LABEL_FONT_PX = 13;
 const LABEL_PAD_PX = 5;
 const LABEL_FONT = `600 ${LABEL_FONT_PX}px ui-sans-serif, system-ui, sans-serif`;
+const LINE_BASE_OPACITY = 0.55;
+const LABEL_BASE_OPACITY = 0.85;
+/** Match member-orbit / tag hide threshold in orbitEllipses / bodyLabels. */
+const LOD_HIDE_OPACITY = 0.02;
 
 /**
  * Approximate heliocentric semimajor axes (AU) for choosing a Sol scale
@@ -62,6 +75,7 @@ const SOL_PLANET_SMA_AU: { id: BodyId; smaAu: number }[] = [
   { id: "saturn", smaAu: 9.53707032 },
   { id: "uranus", smaAu: 19.19126393 },
   { id: "neptune", smaAu: 30.06896348 },
+  { id: "pluto", smaAu: 39.482 },
 ];
 
 const _parentWorldQuat = new Quaternion();
@@ -73,8 +87,16 @@ export type SolScaleReferenceOrbit = {
   setElements: (elements: ClassicalOrbitalElements) => void;
   /** Move the focus to the active system barycenter (world m). */
   setCenter: (x: number, y: number, z: number) => void;
-  /** Billboard + screen-scale the orbit label each frame. */
-  update: (camera: Camera, viewportHeightPx: number) => void;
+  /**
+   * Billboard + screen-scale the orbit label; when `lodMemberId` + bodies are
+   * set, fade like that body's member orbit / tag (system LOD).
+   */
+  update: (
+    camera: Camera,
+    viewportHeightPx: number,
+    bodies?: readonly NbodyBody[],
+    lodMemberId?: BodyId | null,
+  ) => void;
   setVisible: (visible: boolean) => void;
   dispose: () => void;
 };
@@ -92,11 +114,37 @@ function bodyDisplayName(bodyId: BodyId): string {
   return (bracket >= 0 ? name.slice(0, bracket) : name).trim();
 }
 
+/** Sol planet whose heliocentric SMA is nearest `|sma − targetAu|`. */
+function nearestSolPlanetBySmaAu(targetAu: number): BodyId {
+  let best: BodyId = "mercury";
+  let bestDelta = Number.POSITIVE_INFINITY;
+  for (const entry of SOL_PLANET_SMA_AU) {
+    const delta = Math.abs(entry.smaAu - targetAu);
+    if (delta < bestDelta) {
+      bestDelta = delta;
+      best = entry.id;
+    }
+  }
+  return best;
+}
+
 /**
  * Sol planet whose orbit is the closest in size to the exoplanet system's
  * outermost catalog semimajor axis, without being smaller.
+ *
+ * HD 80606: match HD 80606 b’s apastron (Earth ≈ 0.89 AU), drawn about the host.
  */
 export function solScaleReferenceBodyId(systemId: StellarSystemId): BodyId {
+  if (systemId === "hd-80606") {
+    const el = BODIES.hd80606b?.keplerianElements;
+    const a = el?.semiMajorAxisM ?? 0;
+    const e = el?.eccentricity ?? 0;
+    if (a > 0 && e >= 0 && e < 1) {
+      return nearestSolPlanetBySmaAu((a * (1 + e)) / AU_M);
+    }
+    return "earth";
+  }
+
   let maxSemiMajorM = 0;
   for (const body of bodiesForStellarSystem(systemId)) {
     const a = body.keplerianElements?.semiMajorAxisM;
@@ -113,11 +161,64 @@ export function solScaleReferenceBodyId(systemId: StellarSystemId): BodyId {
       best = entry.id;
     }
   }
-  // If the system is wider than Neptune, still use Neptune as the outer bound.
+  // If the system is wider than Pluto, still use Pluto as the outer bound.
   if (!Number.isFinite(bestAu)) {
     return SOL_PLANET_SMA_AU[SOL_PLANET_SMA_AU.length - 1]!.id;
   }
   return best;
+}
+
+/** World-space focus for the Sol scale ellipse (host star or system COM). */
+export function solScaleReferenceCenterBodyId(
+  systemId: StellarSystemId,
+): BodyId | null {
+  // Planet-scale reference about the hot-Jupiter host, not the binary COM.
+  if (systemId === "hd-80606") return "hd80606";
+  return null;
+}
+
+/**
+ * Body whose planetary-system membership drives Sol-scale LOD (same fade as
+ * that member’s orbit + tag). `null` → always fully opaque.
+ */
+export function solScaleReferenceLodMemberId(
+  systemId: StellarSystemId,
+): BodyId | null {
+  if (systemId === "hd-80606") return "hd80606b";
+  return null;
+}
+
+/**
+ * Keep Sol a/e/ω (size + in-plane periapsis), replace i/Ω so the ellipse lies
+ * in the subsystem invariable plane (scene-frame orientation of that plane).
+ */
+export function alignSolScaleElementsToSubsystemPlane(
+  solElements: ClassicalOrbitalElements,
+  subsystemOrientation: Pick<
+    ClassicalOrbitalElements,
+    "inclinationRad" | "raanRad"
+  >,
+): ClassicalOrbitalElements {
+  return {
+    ...solElements,
+    inclinationRad: subsystemOrientation.inclinationRad,
+    raanRad: subsystemOrientation.raanRad,
+  };
+}
+
+/**
+ * Osculating i/Ω of the HD 80606+b subsystem in the scene frame (planet about
+ * the planetary-system barycenter — that plane is the two-body invariable).
+ */
+export function hd80606SubsystemOrientation(
+  bodies: readonly NbodyBody[],
+): Pick<ClassicalOrbitalElements, "inclinationRad" | "raanRad"> | null {
+  const orbit = satelliteOrbitAboutPlanetarySystem("hd80606b", bodies);
+  if (!orbit) return null;
+  return {
+    inclinationRad: orbit.elements.inclinationRad,
+    raanRad: orbit.elements.raanRad,
+  };
 }
 
 function orbitBasis(elements: ClassicalOrbitalElements): {
@@ -309,7 +410,7 @@ export function attachSolScaleReferenceOrbit(
     dashSize: MERCURY_DASH_SIZE_M,
     gapSize: MERCURY_GAP_SIZE_M,
     transparent: true,
-    opacity: 0.55,
+    opacity: LINE_BASE_OPACITY,
     depthWrite: false,
   });
   const line = new Line(geometry, material);
@@ -322,11 +423,20 @@ export function attachSolScaleReferenceOrbit(
   root.add(label.root);
   root.visible = false;
 
+  let elementsReady = false;
+  let userVisible = true;
+
+  const syncRootVisibility = () => {
+    root.visible =
+      elementsReady && userVisible && (line.visible || label.root.visible);
+  };
+
   return {
     setElements(elements) {
       const ok = fillClosedEllipse(positions, elements, ELLIPSE_SEGMENTS);
       if (!ok) {
-        root.visible = false;
+        elementsReady = false;
+        syncRootVisibility();
         return;
       }
       const attr = geometry.getAttribute("position") as BufferAttribute;
@@ -342,19 +452,54 @@ export function attachSolScaleReferenceOrbit(
       // Place the label at apoapsis (outermost point of the ellipse).
       const apo = ellipsePointAtNu(elements, Math.PI);
       if (apo) label.root.position.copy(apo);
-      root.visible = true;
+      elementsReady = true;
+      line.visible = true;
+      label.root.visible = true;
+      material.opacity = LINE_BASE_OPACITY;
+      label.material.opacity = LABEL_BASE_OPACITY;
+      syncRootVisibility();
     },
 
     setCenter(x, y, z) {
       root.position.set(x, y, z);
     },
 
-    update(camera, viewportHeightPx) {
-      if (!root.visible) return;
+    update(camera, viewportHeightPx, bodies, lodMemberId) {
+      if (!elementsReady || !userVisible) return;
       if (!(camera as PerspectiveCamera).isPerspectiveCamera) return;
       if (!(viewportHeightPx > 0)) return;
 
       const perspective = camera as PerspectiveCamera;
+
+      let orbitLod = 1;
+      let tagLod = 1;
+      if (lodMemberId && bodies && bodies.length > 0) {
+        const lod = computeSystemLodStates(
+          perspective,
+          viewportHeightPx,
+          bodies,
+        );
+        const systemId = lod.bodySystemId.get(lodMemberId);
+        const systemLod = systemId ? lod.bySystemId.get(systemId) : undefined;
+        if (systemLod) {
+          orbitLod = systemOrbitMemberLodWeight(systemLod.diameterPx);
+          tagLod = systemTagLodWeights(systemLod.diameterPx).memberWeight;
+        } else {
+          // Not in a planetary system → treat as a lone heliocentric body (full).
+          orbitLod = 1;
+          tagLod = 1;
+        }
+      }
+
+      const showOrbit = orbitLod > LOD_HIDE_OPACITY;
+      const showLabel = tagLod > LOD_HIDE_OPACITY;
+      line.visible = showOrbit;
+      label.root.visible = showLabel;
+      material.opacity = LINE_BASE_OPACITY * orbitLod;
+      label.material.opacity = LABEL_BASE_OPACITY * tagLod;
+      syncRootVisibility();
+      if (!root.visible) return;
+
       root.updateWorldMatrix(true, false);
       label.root.getWorldPosition(_labelWorld);
       const distanceM = Math.max(_labelWorld.distanceTo(camera.position), 1);
@@ -376,7 +521,8 @@ export function attachSolScaleReferenceOrbit(
     },
 
     setVisible(visible) {
-      root.visible = visible;
+      userVisible = visible;
+      syncRootVisibility();
     },
 
     dispose() {

@@ -1,5 +1,5 @@
 import { BODIES, getRing } from "../data/bodies";
-import { ATMOSPHERE_HEIGHT_M } from "../data/types";
+import { ATMOSPHERE_HEIGHT_M, type StellarSystemId } from "../data/types";
 
 /** IAU astronomical unit in meters. */
 export const METERS_PER_AU = 149_597_870_700;
@@ -506,6 +506,25 @@ export const CAMERA_FAR_M = 2_000 * METERS_PER_AU;
 /** Orbit zoom range (distance from controls target), in meters. */
 export const CAMERA_MIN_DISTANCE_M = 3 * NEPTUNE_RADIUS_X_M;
 export const CAMERA_MAX_DISTANCE_M = CAMERA_FAR_M * 0.5;
+
+/**
+ * HD 80606/07 relative apoapsis is ~2,500 AU; Sol’s 1,000 AU zoom cap cannot
+ * frame the mutual star ellipses. Far plane stays 2× max distance.
+ */
+export const HD80606_CAMERA_MAX_DISTANCE_M = 8_000 * METERS_PER_AU;
+export const HD80606_CAMERA_FAR_M = 16_000 * METERS_PER_AU;
+
+/** OrbitControls maxDistance for the active stellar system. */
+export function cameraMaxDistanceM(systemId: StellarSystemId): number {
+  if (systemId === "hd-80606") return HD80606_CAMERA_MAX_DISTANCE_M;
+  return CAMERA_MAX_DISTANCE_M;
+}
+
+/** PerspectiveCamera far plane for the active stellar system. */
+export function cameraFarM(systemId: StellarSystemId): number {
+  if (systemId === "hd-80606") return HD80606_CAMERA_FAR_M;
+  return CAMERA_FAR_M;
+}
 
 /** Log-distance change per wheel notch (natural log of meters). */
 export const CAMERA_LOG_ZOOM_SPEED = 0.05;
