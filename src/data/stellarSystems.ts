@@ -35,7 +35,7 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
     },
     "trappist-1": {
       id: "trappist-1",
-      name: "TRAPPIST-1 System",
+      name: "TRAPPIST-1",
       primaryBodyId: "trappist1",
       defaultFocusId: "trappist-1-system",
       usesSpk: false,
@@ -43,7 +43,7 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
     },
     "hd-110067": {
       id: "hd-110067",
-      name: "HD 110067 System",
+      name: "HD 110067",
       primaryBodyId: "hd110067",
       defaultFocusId: "hd-110067-system",
       usesSpk: false,
@@ -51,7 +51,7 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
     },
     "hd-10180": {
       id: "hd-10180",
-      name: "HD 10180 System",
+      name: "HD 10180",
       primaryBodyId: "hd10180",
       defaultFocusId: "hd-10180-system",
       usesSpk: false,
@@ -59,7 +59,7 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
     },
     "hd-219134": {
       id: "hd-219134",
-      name: "HD 219134 System",
+      name: "HD 219134",
       primaryBodyId: "hd219134",
       defaultFocusId: "hd-219134-system",
       usesSpk: false,
@@ -67,7 +67,7 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
     },
     "kepler-90": {
       id: "kepler-90",
-      name: "Kepler-90 System",
+      name: "Kepler-90",
       primaryBodyId: "kepler90",
       defaultFocusId: "kepler-90-system",
       usesSpk: false,
