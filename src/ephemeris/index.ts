@@ -48,6 +48,14 @@ export {
   hd80606DirectionFromSolIcrf,
 } from "./hd80606Frame";
 export {
+  KEPLER16_DEC_DEG,
+  KEPLER16_DISTANCE_LY,
+  KEPLER16_RA_DEG,
+  kepler16BinaryPeriodSeconds,
+  kepler16BinaryStatesInScene,
+  kepler16DirectionFromSolIcrf,
+} from "./kepler16Frame";
+export {
   buildExoplanetSceneBasis,
   clearExoplanetFrameCache,
   exoplanetDirectionFromSolIcrf,

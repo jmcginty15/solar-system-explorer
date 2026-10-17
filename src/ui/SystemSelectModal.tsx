@@ -35,6 +35,8 @@ function systemBlurb(id: StellarSystemId): string {
       return "F-type star about 2,790 light-years away in the constellation Draco. Host of an eight-planet system with the same planet count as our Solar System, all closer to their star than Earth is to our Sun.";
     case "hd-80606":
       return "Wide G8V binary about 215 light-years away in Ursa Major. HD 80606 hosts a highly eccentric hot Jupiter.";
+    case "kepler-16":
+      return "Eclipsing K+M binary about 245 light-years away in Cygnus. The two stars orbit a shared barycenter every ~41 days, with Saturn-sized circumbinary planet Kepler-16 b on a ~229-day orbit about the pair.";
   }
 }
 

@@ -11,7 +11,7 @@
       "gasGiantEffects": false,
       "glowAndLight": true,
       "type": "star",
-      "mass": 1.988475e+30,
+      "mass": 1.988475e30,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 286.13
@@ -41,7 +41,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "terrestrial-planet",
-      "mass": 3.302e+23,
+      "mass": 3.302e23,
       "albedo": 0.106,
       "iauOrientation": {
         "northPoleRa": {
@@ -104,7 +104,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "terrestrial-planet",
-      "mass": 4.8685e+24,
+      "mass": 4.8685e24,
       "albedo": 0.65,
       "iauOrientation": {
         "northPoleRa": {
@@ -137,7 +137,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "terrestrial-planet",
-      "mass": 5.97219e+24,
+      "mass": 5.97219e24,
       "albedo": 0.367,
       "iauOrientation": {
         "northPoleRa": {
@@ -167,7 +167,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "terrestrial-planet",
-      "mass": 6.4171e+23,
+      "mass": 6.4171e23,
       "albedo": 0.15,
       "iauOrientation": {
         "northPoleRa": {
@@ -208,7 +208,7 @@
             },
             {
               "angle": "N2",
-              "sinCoeff": 3e-05
+              "sinCoeff": 3e-5
             }
           ]
         },
@@ -243,7 +243,7 @@
         },
         "northPoleDec": {
           "constant": 66.76063,
-          "perCentury": -6e-05
+          "perCentury": -6e-5
         },
         "primeMeridian": {
           "constant": 170.65,
@@ -855,7 +855,7 @@
         ]
       },
       "type": "dwarf-planet",
-      "mass": 1.212e+21,
+      "mass": 1.212e21,
       "albedo": 0.124,
       "iauOrientation": {
         "northPoleRa": {
@@ -1131,7 +1131,7 @@
         ]
       },
       "type": "gas-giant",
-      "mass": 1.89819e+27,
+      "mass": 1.89819e27,
       "albedo": 0.52,
       "iauOrientation": {
         "northPoleRa": {
@@ -1178,7 +1178,7 @@
             },
             {
               "angle": "J4",
-              "cosCoeff": 6e-05
+              "cosCoeff": 6e-5
             },
             {
               "angle": "J5",
@@ -1392,7 +1392,7 @@
         ]
       },
       "type": "gas-giant",
-      "mass": 5.6834e+26,
+      "mass": 5.6834e26,
       "albedo": 0.47,
       "iauOrientation": {
         "northPoleRa": {
@@ -1648,7 +1648,7 @@
         ]
       },
       "type": "ice-giant",
-      "mass": 8.6813e+25,
+      "mass": 8.6813e25,
       "albedo": 0.51,
       "iauOrientation": {
         "northPoleRa": {
@@ -1741,7 +1741,7 @@
         ]
       },
       "type": "ice-giant",
-      "mass": 1.02409e+26,
+      "mass": 1.02409e26,
       "albedo": 0.41,
       "iauOrientation": {
         "northPoleRa": {
@@ -1805,7 +1805,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "dwarf-planet",
-      "mass": 1.307e+22,
+      "mass": 1.307e22,
       "albedo": 0.52,
       "iauOrientation": {
         "northPoleRa": {
@@ -1831,7 +1831,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "dwarf-planet",
-      "mass": 1.638e+22,
+      "mass": 1.638e22,
       "albedo": 0.96,
       "iauOrientation": {
         "northPoleRa": {
@@ -1857,7 +1857,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "dwarf-planet",
-      "mass": 2.69e+21,
+      "mass": 2.69e21,
       "albedo": 0.82,
       "iauOrientation": {
         "northPoleRa": {
@@ -1904,7 +1904,7 @@
         ]
       },
       "type": "dwarf-planet",
-      "mass": 3.952e+21,
+      "mass": 3.952e21,
       "albedo": 0.51,
       "iauOrientation": {
         "northPoleRa": {
@@ -1932,7 +1932,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "terrestrial-satellite",
-      "mass": 7.349e+22,
+      "mass": 7.349e22,
       "albedo": 0.12,
       "iauOrientation": {
         "northPoleRa": {
@@ -2166,7 +2166,7 @@
         "primeMeridian": {
           "constant": 35.06,
           "perDay": 1128.844585,
-          "perDaySquared": 8.864e-09,
+          "perDaySquared": 8.864e-9,
           "periodic": [
             {
               "angle": "M1",
@@ -2261,7 +2261,7 @@
       "glowAndLight": false,
       "type": "jovian-satellite",
       "satelliteGroup": "galilean",
-      "mass": 8.9296e+22,
+      "mass": 8.9296e22,
       "albedo": 0.63,
       "iauOrientation": {
         "northPoleRa": {
@@ -2330,7 +2330,7 @@
       "glowAndLight": false,
       "type": "jovian-satellite",
       "satelliteGroup": "galilean",
-      "mass": 4.79984e+22,
+      "mass": 4.79984e22,
       "albedo": 0.72,
       "iauOrientation": {
         "northPoleRa": {
@@ -2418,7 +2418,7 @@
       "glowAndLight": false,
       "type": "jovian-satellite",
       "satelliteGroup": "galilean",
-      "mass": 1.481478e+23,
+      "mass": 1.481478e23,
       "albedo": 0.43,
       "iauOrientation": {
         "northPoleRa": {
@@ -2503,7 +2503,7 @@
       "glowAndLight": false,
       "type": "jovian-satellite",
       "satelliteGroup": "galilean",
-      "mass": 1.075938e+23,
+      "mass": 1.075938e23,
       "albedo": 0.17,
       "iauOrientation": {
         "northPoleRa": {
@@ -5667,7 +5667,7 @@
       "glowAndLight": false,
       "type": "saturnian-satellite",
       "satelliteGroup": "major",
-      "mass": 1.0954868e+21,
+      "mass": 1.0954868e21,
       "albedo": 0.998,
       "iauOrientation": {
         "northPoleRa": {
@@ -5696,7 +5696,7 @@
       "glowAndLight": false,
       "type": "saturnian-satellite",
       "satelliteGroup": "major",
-      "mass": 2.3064854e+21,
+      "mass": 2.3064854e21,
       "albedo": 0.949,
       "iauOrientation": {
         "northPoleRa": {
@@ -5749,7 +5749,7 @@
       "glowAndLight": false,
       "type": "saturnian-satellite",
       "satelliteGroup": "major",
-      "mass": 1.34553e+23,
+      "mass": 1.34553e23,
       "albedo": 0.2,
       "iauOrientation": {
         "northPoleRa": {
@@ -5867,7 +5867,7 @@
       "glowAndLight": false,
       "type": "saturnian-satellite",
       "satelliteGroup": "major",
-      "mass": 1.8059e+21,
+      "mass": 1.8059e21,
       "albedo": 0.6,
       "iauOrientation": {
         "northPoleRa": {
@@ -13467,7 +13467,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "uranian-satellite",
-      "mass": 1.2331e+21,
+      "mass": 1.2331e21,
       "albedo": 0.53,
       "iauOrientation": {
         "northPoleRa": {
@@ -13518,7 +13518,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "uranian-satellite",
-      "mass": 1.2885e+21,
+      "mass": 1.2885e21,
       "albedo": 0.26,
       "iauOrientation": {
         "northPoleRa": {
@@ -13569,7 +13569,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "uranian-satellite",
-      "mass": 3.455e+21,
+      "mass": 3.455e21,
       "albedo": 0.35,
       "iauOrientation": {
         "northPoleRa": {
@@ -13620,7 +13620,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "uranian-satellite",
-      "mass": 3.1104e+21,
+      "mass": 3.1104e21,
       "albedo": 0.31,
       "iauOrientation": {
         "northPoleRa": {
@@ -14359,7 +14359,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "neptunian-satellite",
-      "mass": 2.1389e+22,
+      "mass": 2.1389e22,
       "albedo": 0.7,
       "iauOrientation": {
         "northPoleRa": {
@@ -14806,7 +14806,7 @@
       "gasGiantEffects": false,
       "glowAndLight": false,
       "type": "plutonian-satellite",
-      "mass": 1.5897e+21,
+      "mass": 1.5897e21,
       "albedo": 0.38,
       "iauOrientation": {
         "northPoleRa": {
@@ -15570,7 +15570,7 @@
       "color": 16733491,
       "stellarSystemId": "trappist-1",
       "type": "star",
-      "mass": 1.796e+29,
+      "mass": 1.796e29,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 256.3874743235052
@@ -15598,7 +15598,7 @@
       "glowAndLight": false,
       "stellarSystemId": "trappist-1",
       "type": "terrestrial-planet",
-      "mass": 8.205789060000001e+24,
+      "mass": 8.205789060000001e24,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 1726359427.878,
@@ -15637,7 +15637,7 @@
       "glowAndLight": false,
       "stellarSystemId": "trappist-1",
       "type": "terrestrial-planet",
-      "mass": 7.81162452e+24,
+      "mass": 7.81162452e24,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 2363646357.0600004,
@@ -15676,7 +15676,7 @@
       "glowAndLight": false,
       "stellarSystemId": "trappist-1",
       "type": "terrestrial-planet",
-      "mass": 2.3172097200000002e+24,
+      "mass": 2.3172097200000002e24,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 3331544580.4890003,
@@ -15712,7 +15712,7 @@
       "glowAndLight": false,
       "stellarSystemId": "trappist-1",
       "type": "terrestrial-planet",
-      "mass": 4.13275548e+24,
+      "mass": 4.13275548e24,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 4375737717.975,
@@ -15751,7 +15751,7 @@
       "glowAndLight": false,
       "stellarSystemId": "trappist-1",
       "type": "terrestrial-planet",
-      "mass": 6.20510541e+24,
+      "mass": 6.20510541e24,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 5758022043.243,
@@ -15787,7 +15787,7 @@
       "glowAndLight": false,
       "stellarSystemId": "trappist-1",
       "type": "terrestrial-planet",
-      "mass": 7.88926299e+24,
+      "mass": 7.88926299e24,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 7005668284.881,
@@ -15822,7 +15822,7 @@
       "glowAndLight": false,
       "stellarSystemId": "trappist-1",
       "type": "terrestrial-planet",
-      "mass": 1.9469339400000002e+24,
+      "mass": 1.9469339400000002e24,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 9258612217.623,
@@ -15864,7 +15864,7 @@
       "color": 16759880,
       "stellarSystemId": "hd-110067",
       "type": "star",
-      "mass": 1.58680305e+30,
+      "mass": 1.58680305e30,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 279.42463598698185
@@ -15889,7 +15889,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-110067",
       "type": "ice-giant",
-      "mass": 3.3981761100000005e+25,
+      "mass": 3.3981761100000005e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 11863111146.51,
@@ -15926,7 +15926,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-110067",
       "type": "ice-giant",
-      "mass": 3.7624797e+25,
+      "mass": 3.7624797e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 15543218765.730001,
@@ -15963,7 +15963,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-110067",
       "type": "ice-giant",
-      "mass": 5.08830588e+25,
+      "mass": 5.08830588e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 20375229989.339996,
@@ -16000,7 +16000,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-110067",
       "type": "ice-giant",
-      "mass": 2.3291541000000003e+25,
+      "mass": 2.3291541000000003e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 26703219919.949997,
@@ -16037,7 +16037,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-110067",
       "type": "ice-giant",
-      "mass": 3.0099837600000002e+25,
+      "mass": 3.0099837600000002e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 32358019432.41,
@@ -16074,7 +16074,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-110067",
       "type": "ice-giant",
-      "mass": 5.0166396000000005e+25,
+      "mass": 5.0166396000000005e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 39209601910.47,
@@ -16116,7 +16116,7 @@
       "color": 16772048,
       "stellarSystemId": "hd-10180",
       "type": "star",
-      "mass": 2.12766825e+30,
+      "mass": 2.12766825e30,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 205.3838904301636
@@ -16141,7 +16141,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-10180",
       "type": "gas-giant",
-      "mass": 7.8832908e+25,
+      "mass": 7.8832908e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 9592215469.284,
@@ -16177,7 +16177,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-10180",
       "type": "gas-giant",
-      "mass": 7.166628e+25,
+      "mass": 7.166628e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 19236790193.313,
@@ -16213,7 +16213,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-10180",
       "type": "ice-giant",
-      "mass": 1.5288806400000001e+26,
+      "mass": 1.5288806400000001e26,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 40376465301.92999,
@@ -16249,7 +16249,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-10180",
       "type": "ice-giant",
-      "mass": 1.15860486e+26,
+      "mass": 1.15860486e26,
       "keplerianElements": {
         "semiMajorAxisM": 73736790468.03,
         "eccentricity": 0.119,
@@ -16284,7 +16284,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-10180",
       "type": "ice-giant",
-      "mass": 1.3915202700000001e+26,
+      "mass": 1.3915202700000001e26,
       "keplerianElements": {
         "semiMajorAxisM": 213476161488.9,
         "eccentricity": 0.263,
@@ -16319,7 +16319,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-10180",
       "type": "ice-giant",
-      "mass": 2.76512397e+26,
+      "mass": 2.76512397e26,
       "keplerianElements": {
         "semiMajorAxisM": 505790400836.69995,
         "eccentricity": 0.095,
@@ -16359,7 +16359,7 @@
       "color": 16749392,
       "stellarSystemId": "hd-219134",
       "type": "star",
-      "mass": 1.5678798687477837e+30,
+      "mass": 1.5678798687477837e30,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 246.7931360828468
@@ -16384,7 +16384,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-219134",
       "type": "terrestrial-planet",
-      "mass": 2.8308180600000003e+25,
+      "mass": 2.8308180600000003e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 5798413468.332001,
@@ -16421,7 +16421,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-219134",
       "type": "terrestrial-planet",
-      "mass": 2.6038748400000004e+25,
+      "mass": 2.6038748400000004e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 9768740956.71,
@@ -16458,7 +16458,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-219134",
       "type": "terrestrial-planet",
-      "mass": 4.3596987000000006e+25,
+      "mass": 4.3596987000000006e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 21886168483.410004,
@@ -16494,7 +16494,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-219134",
       "type": "ice-giant",
-      "mass": 9.657031230000002e+25,
+      "mass": 9.657031230000002e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 35454695355.9,
@@ -16530,7 +16530,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-219134",
       "type": "ice-giant",
-      "mass": 6.569409000000001e+25,
+      "mass": 6.569409000000001e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 56144080873.71001,
@@ -16566,7 +16566,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-219134",
       "type": "gas-giant",
-      "mass": 7.8395247e+26,
+      "mass": 7.8395247e26,
       "keplerianElements": {
         "semiMajorAxisM": 465249377877,
         "eccentricity": 0.06,
@@ -16607,7 +16607,7 @@
       "color": 16774625,
       "stellarSystemId": "kepler-90",
       "type": "star",
-      "mass": 2.2270920000000002e+30,
+      "mass": 2.2270920000000002e30,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 14.37305206972487
@@ -16632,7 +16632,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "terrestrial-planet",
-      "mass": 2.5680417e+25,
+      "mass": 2.5680417e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 11070242431.8,
@@ -16668,7 +16668,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "terrestrial-planet",
-      "mass": 3.8819235e+25,
+      "mass": 3.8819235e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 13314210492.3,
@@ -16704,7 +16704,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "terrestrial-planet",
-      "mass": 2.6874855000000002e+25,
+      "mass": 2.6874855000000002e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 17972401601.2571,
@@ -16740,7 +16740,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "ice-giant",
-      "mass": 4.299976800000001e+25,
+      "mass": 4.299976800000001e25,
       "tidallyLocked": true,
       "keplerianElements": {
         "semiMajorAxisM": 47871318624,
@@ -16776,7 +16776,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "ice-giant",
-      "mass": 3.9416454e+25,
+      "mass": 3.9416454e25,
       "keplerianElements": {
         "semiMajorAxisM": 62831105694,
         "eccentricity": 0,
@@ -16811,7 +16811,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "ice-giant",
-      "mass": 4.1208111e+25,
+      "mass": 4.1208111e25,
       "keplerianElements": {
         "semiMajorAxisM": 71806977936,
         "eccentricity": 0,
@@ -16846,7 +16846,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "gas-giant",
-      "mass": 8.958285e+25,
+      "mass": 8.958285e25,
       "keplerianElements": {
         "semiMajorAxisM": 107239563250.2031,
         "eccentricity": 0.0292,
@@ -16882,7 +16882,7 @@
       "glowAndLight": false,
       "stellarSystemId": "kepler-90",
       "type": "gas-giant",
-      "mass": 1.2123545700000001e+27,
+      "mass": 1.2123545700000001e27,
       "keplerianElements": {
         "semiMajorAxisM": 145140683703.2526,
         "eccentricity": 0.0276,
@@ -16923,7 +16923,7 @@
       "color": 16771028,
       "stellarSystemId": "hd-80606",
       "type": "star",
-      "mass": 2.08789875e+30,
+      "mass": 2.08789875e30,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 322.1334428942284
@@ -16953,7 +16953,7 @@
       "color": 16770000,
       "stellarSystemId": "hd-80606",
       "type": "star",
-      "mass": 1.988475e+30,
+      "mass": 1.988475e30,
       "iauOrientation": {
         "northPoleRa": {
           "constant": 322.1334428942284
@@ -16978,7 +16978,7 @@
       "glowAndLight": false,
       "stellarSystemId": "hd-80606",
       "type": "gas-giant",
-      "mass": 7.904252979e+27,
+      "mass": 7.904252979e27,
       "tidallyLocked": false,
       "keplerianElements": {
         "semiMajorAxisM": 68859899883.21,
@@ -17002,6 +17002,114 @@
         "primeMeridian": {
           "constant": 0,
           "perDay": 92.90322580645162
+        }
+      }
+    },
+    "kepler16A": {
+      "id": "kepler16A",
+      "name": "Kepler-16A",
+      "radiusXM": 454292100,
+      "radiusYM": 454292100,
+      "radiusZM": 454292100,
+      "textureMapUrl": "sun-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 0.148,
+      "spectralType": "K7V",
+      "starColor": 16750500,
+      "color": 16744500,
+      "stellarSystemId": "kepler-16",
+      "type": "star",
+      "mass": 1.3998864e30,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 199.26391376136363
+        },
+        "northPoleDec": {
+          "constant": 0.2387682030373522
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 10.256410256410255
+        }
+      }
+    },
+    "kepler16B": {
+      "id": "kepler16B",
+      "name": "Kepler-16B",
+      "radiusXM": 159315300,
+      "radiusYM": 159315300,
+      "radiusZM": 159315300,
+      "textureMapUrl": "trappist1-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 0.0057,
+      "spectralType": "M",
+      "starColor": 16738877,
+      "color": 16733491,
+      "stellarSystemId": "kepler-16",
+      "type": "star",
+      "mass": 4.08432765e29,
+      "keplerianElements": {
+        "semiMajorAxisM": 33764239416.99,
+        "eccentricity": 0.15962,
+        "inclinationRad": 1.5761023022538845,
+        "argPeriapsisRad": 4.601909638733449,
+        "raanRad": 0,
+        "periodS": 3548337.4971006196,
+        "periastronJd": 2457573.0995,
+        "radialVelocityAmplitudeMS": 46880,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 199.26391376136363
+        },
+        "northPoleDec": {
+          "constant": 0.2387682030373522
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 8.763862757227589
+        }
+      }
+    },
+    "kepler16b": {
+      "id": "kepler16b",
+      "name": "Kepler-16 b",
+      "radiusXM": 53887654.4,
+      "radiusYM": 53887654.4,
+      "radiusZM": 53887654.4,
+      "color": 14861466,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "kepler-16",
+      "type": "gas-giant",
+      "mass": 6.3209727e26,
+      "tidallyLocked": false,
+      "keplerianElements": {
+        "semiMajorAxisM": 105436579269.36,
+        "eccentricity": 0.0069,
+        "inclinationRad": 1.5713583228140389,
+        "argPeriapsisRad": 5.550147021341968,
+        "raanRad": 0,
+        "periodS": 19766246.4,
+        "transitJd": 2455212.12316,
+        "radialVelocityAmplitudeMS": 11800,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 199.26391376136363
+        },
+        "northPoleDec": {
+          "constant": 0.2387682030373522
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1.5735916354862398
         }
       }
     }
@@ -17049,6 +17157,9 @@
     "hd80606",
     "hd80606b",
     "hd80607",
+    "kepler16A",
+    "kepler16B",
+    "kepler16b",
     "mercury",
     "venus",
     "earth",

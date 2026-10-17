@@ -23,6 +23,10 @@ import {
   hd80606BinaryOrbitalPoleIcrf,
   hd80606DirectionFromSolIcrf,
 } from "./hd80606Frame";
+import {
+  kepler16BinaryOrbitalPoleIcrf,
+  kepler16DirectionFromSolIcrf,
+} from "./kepler16Frame";
 import { kepler90DirectionFromSolIcrf } from "./kepler90Frame";
 import { trappist1DirectionFromSolIcrf } from "./trappist1Frame";
 
@@ -64,6 +68,8 @@ export function exoplanetDirectionFromSolIcrf(
       return kepler90DirectionFromSolIcrf();
     case "hd-80606":
       return hd80606DirectionFromSolIcrf();
+    case "kepler-16":
+      return kepler16DirectionFromSolIcrf();
     case "sol":
       return new Vector3(1, 0, 0);
   }
@@ -122,12 +128,15 @@ export function skyOrbitalPoleIcrf(
  * Mass-weighted invariable pole for an exoplanet system from catalog Keplerians.
  * Falls back to the sky-frame +Z (toward observer) when no planets are present.
  *
- * HD 80606/07: always the binary orbital pole so scene XY is the stellar
- * invariable plane (the hot Jupiter is inclined relative to that plane).
+ * HD 80606/07 and Kepler-16: always the binary orbital pole so scene XY is
+ * the stellar invariable plane.
  */
 export function systemInvariablePoleIcrf(systemId: StellarSystemId): Vector3 {
   if (systemId === "hd-80606") {
     return hd80606BinaryOrbitalPoleIcrf();
+  }
+  if (systemId === "kepler-16") {
+    return kepler16BinaryOrbitalPoleIcrf();
   }
 
   const direction = exoplanetDirectionFromSolIcrf(systemId);

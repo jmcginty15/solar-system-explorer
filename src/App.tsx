@@ -48,6 +48,7 @@ import {
   clearExoplanetFrameCache,
   exoplanetSceneBasis,
   hd80606BinaryStatesInScene,
+  kepler16BinaryStatesInScene,
   transformStateToInvariable,
   type BodyState,
   type ErrorReport,
@@ -1202,6 +1203,51 @@ export default function App() {
                   z: hostState.velocityMS.z + relative.velocityMS.z,
                 },
               };
+            }
+            if (!state) continue;
+
+            states[bodyId] = state;
+            livePositions[bodyId] = state.positionM;
+            orientations[bodyId] = orientationQuaternionForBody(body, d, T);
+            atmospherePrimeMeridianDeg[bodyId] = evaluateIauOrientation(
+              body.iauOrientation,
+              d,
+              T,
+            ).wDeg;
+          }
+          parkStarAtBarycenter(states, systemStarId, { pinPrimary: false });
+          for (const bodyId of Object.keys(states) as BodyId[]) {
+            const state = states[bodyId];
+            if (state) livePositions[bodyId] = state.positionM;
+          }
+        } else if (stellarSystemId === "kepler-16") {
+          // Stars from relative Keplerians (COM-split); circumbinary planet
+          // Keplerian about the binary barycenter (μ = G(M_A + M_B)).
+          const binaryStates = kepler16BinaryStatesInScene(
+            exoplanetSceneBasis(stellarSystemId).icrfToScene,
+            jd,
+          );
+          const binaryMassKg =
+            (BODIES.kepler16A?.mass ?? 0) + (BODIES.kepler16B?.mass ?? 0);
+          for (const bodyId of bodyIds) {
+            const body = BODIES[bodyId];
+            if (!body) continue;
+
+            let state: BodyState | null = binaryStates[bodyId] ?? null;
+            if (!state && body.keplerianElements && binaryMassKg > 0) {
+              state = bodyStateFromKeplerianElements(
+                body.keplerianElements,
+                binaryMassKg,
+                body.mass,
+                jd,
+                stellarSystemId,
+              );
+              if (!state) {
+                console.warn(
+                  `Keplerian state failed for "${bodyId}"; omitting body`,
+                );
+                continue;
+              }
             }
             if (!state) continue;
 

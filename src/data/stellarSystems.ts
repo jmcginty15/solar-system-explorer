@@ -82,6 +82,15 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
       // Hierarchical: both stars are unbound primaries about the binary COM;
       // HD 80606 b is a Kepler moon of HD 80606 (not full pairwise N-body).
     },
+    "kepler-16": {
+      id: "kepler-16",
+      name: "Kepler-16",
+      primaryBodyId: "kepler16A",
+      defaultFocusId: "kepler-16-system",
+      usesSpk: false,
+      // Compact eclipsing binary: pairwise N-body about the mutual COM.
+      forceSummationOnly: true,
+    },
   };
 
 /**
@@ -113,6 +122,7 @@ export const STELLAR_SYSTEM_ORDER: readonly StellarSystemId[] = [
   "hd-219134",
   "kepler-90",
   "hd-80606",
+  "kepler-16",
 ] as const;
 
 export const DEFAULT_STELLAR_SYSTEM_ID: StellarSystemId = "sol";
