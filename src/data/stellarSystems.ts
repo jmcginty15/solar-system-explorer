@@ -91,6 +91,15 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
       // Compact eclipsing binary: pairwise N-body about the mutual COM.
       forceSummationOnly: true,
     },
+    "kepler-47": {
+      id: "kepler-47",
+      name: "Kepler-47",
+      primaryBodyId: "kepler47A",
+      defaultFocusId: "kepler-47-system",
+      usesSpk: false,
+      // Compact eclipsing binary: pairwise N-body about the mutual COM.
+      forceSummationOnly: true,
+    },
   };
 
 /**
@@ -123,6 +132,7 @@ export const STELLAR_SYSTEM_ORDER: readonly StellarSystemId[] = [
   "kepler-90",
   "hd-80606",
   "kepler-16",
+  "kepler-47",
 ] as const;
 
 export const DEFAULT_STELLAR_SYSTEM_ID: StellarSystemId = "sol";

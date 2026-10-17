@@ -49,6 +49,7 @@ import {
   exoplanetSceneBasis,
   hd80606BinaryStatesInScene,
   kepler16BinaryStatesInScene,
+  kepler47BinaryStatesInScene,
   transformStateToInvariable,
   type BodyState,
   type ErrorReport,
@@ -1220,15 +1221,26 @@ export default function App() {
             const state = states[bodyId];
             if (state) livePositions[bodyId] = state.positionM;
           }
-        } else if (stellarSystemId === "kepler-16") {
-          // Stars from relative Keplerians (COM-split); circumbinary planet
+        } else if (
+          stellarSystemId === "kepler-16" ||
+          stellarSystemId === "kepler-47"
+        ) {
+          // Stars from relative Keplerians (COM-split); circumbinary planets
           // Keplerian about the binary barycenter (μ = G(M_A + M_B)).
-          const binaryStates = kepler16BinaryStatesInScene(
-            exoplanetSceneBasis(stellarSystemId).icrfToScene,
-            jd,
-          );
+          const binaryStates =
+            stellarSystemId === "kepler-16"
+              ? kepler16BinaryStatesInScene(
+                  exoplanetSceneBasis(stellarSystemId).icrfToScene,
+                  jd,
+                )
+              : kepler47BinaryStatesInScene(
+                  exoplanetSceneBasis(stellarSystemId).icrfToScene,
+                  jd,
+                );
           const binaryMassKg =
-            (BODIES.kepler16A?.mass ?? 0) + (BODIES.kepler16B?.mass ?? 0);
+            stellarSystemId === "kepler-16"
+              ? (BODIES.kepler16A?.mass ?? 0) + (BODIES.kepler16B?.mass ?? 0)
+              : (BODIES.kepler47A?.mass ?? 0) + (BODIES.kepler47B?.mass ?? 0);
           for (const bodyId of bodyIds) {
             const body = BODIES[bodyId];
             if (!body) continue;

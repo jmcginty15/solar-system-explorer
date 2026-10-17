@@ -20,6 +20,7 @@ import {
   HD80606_SYSTEM_DISTANCE_LY,
   HD80607_DISTANCE_LY,
   KEPLER16_DISTANCE_LY,
+  KEPLER47_DISTANCE_LY,
   KEPLER90_DISTANCE_LY,
   TRAPPIST1_DISTANCE_LY,
   centuriesFromJ2000,
@@ -400,6 +401,15 @@ function distanceFromSunLyForBody(bodyId: BodyId): number | undefined {
   ) {
     return KEPLER16_DISTANCE_LY;
   }
+  if (
+    bodyId === "kepler47A" ||
+    bodyId === "kepler47B" ||
+    bodyId === "kepler47b" ||
+    bodyId === "kepler47c" ||
+    bodyId === "kepler47d"
+  ) {
+    return KEPLER47_DISTANCE_LY;
+  }
   return undefined;
 }
 
@@ -517,7 +527,9 @@ function stellarSystemInfo(
                 ? { distanceFromSunLy: HD80606_SYSTEM_DISTANCE_LY }
                 : stellarId === "kepler-16"
                   ? { distanceFromSunLy: KEPLER16_DISTANCE_LY }
-                  : {}),
+                  : stellarId === "kepler-47"
+                    ? { distanceFromSunLy: KEPLER47_DISTANCE_LY }
+                    : {}),
     planetCount,
     ...(stellarId === "sol" ? { dwarfPlanetCount } : {}),
     totalMassKg: availableBodiesTotalMassKg(available),

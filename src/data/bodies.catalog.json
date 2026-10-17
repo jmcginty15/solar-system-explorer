@@ -17112,6 +17112,191 @@
           "perDay": 1.5735916354862398
         }
       }
+    },
+    "kepler47A": {
+      "id": "kepler47A",
+      "name": "Kepler-47A",
+      "radiusXM": 651175200,
+      "radiusYM": 651175200,
+      "radiusZM": 651175200,
+      "textureMapUrl": "sun-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 0.84,
+      "spectralType": "G6V",
+      "starColor": 16773584,
+      "color": 16772058,
+      "stellarSystemId": "kepler-47",
+      "type": "star",
+      "mass": 1.902970575e30,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 25.033581564063013
+        },
+        "northPoleDec": {
+          "constant": 0.28266627146806544
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 31.168964872609216
+        }
+      }
+    },
+    "kepler47B": {
+      "id": "kepler47B",
+      "name": "Kepler-47B",
+      "radiusXM": 235146600,
+      "radiusYM": 235146600,
+      "radiusZM": 235146600,
+      "textureMapUrl": "trappist1-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 0.014,
+      "spectralType": "M4V",
+      "starColor": 16738877,
+      "color": 16733491,
+      "stellarSystemId": "kepler-47",
+      "type": "star",
+      "mass": 6.8005845e29,
+      "keplerianElements": {
+        "semiMajorAxisM": 12184746568.515,
+        "eccentricity": 0.0288,
+        "inclinationRad": 1.5640419025896786,
+        "argPeriapsisRad": 3.949680097263168,
+        "raanRad": 0,
+        "periodS": 643538.71872,
+        "periastronJd": 2454958.5691884425,
+        "radialVelocityAmplitudeMS": 87681,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 25.033581564063013
+        },
+        "northPoleDec": {
+          "constant": 0.28266627146806544
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 48.33275620442221
+        }
+      }
+    },
+    "kepler47b": {
+      "id": "kepler47b",
+      "name": "Kepler-47 b",
+      "radiusXM": 19453317.85,
+      "radiusYM": 19453317.85,
+      "radiusZM": 19453317.85,
+      "textureMapUrl": "neptune-map.jpg",
+      "color": 11069152,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "kepler-47",
+      "type": "ice-giant",
+      "mass": 1.23624333e25,
+      "tidallyLocked": false,
+      "keplerianElements": {
+        "semiMajorAxisM": 43039307400.39,
+        "eccentricity": 0.021,
+        "inclinationRad": 1.5664679102499506,
+        "argPeriapsisRad": 0.8482300164692442,
+        "raanRad": 0,
+        "periodS": 4273715.52,
+        "transitJd": 2454968.6427,
+        "radialVelocityAmplitudeMS": 63290,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 25.033581564063013
+        },
+        "northPoleDec": {
+          "constant": 0.28266627146806544
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 536.3128492
+        }
+      }
+    },
+    "kepler47d": {
+      "id": "kepler47d",
+      "name": "Kepler-47 d",
+      "radiusXM": 44902084.48,
+      "radiusYM": 44902084.48,
+      "radiusZM": 44902084.48,
+      "textureMapUrl": "saturn-map.jpg",
+      "color": 15777936,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "kepler-47",
+      "type": "ice-giant",
+      "mass": 1.135910538e26,
+      "tidallyLocked": false,
+      "keplerianElements": {
+        "semiMajorAxisM": 104598831193.44,
+        "eccentricity": 0.024,
+        "inclinationRad": 1.5776903773402742,
+        "argPeriapsisRad": 6.14355896702004,
+        "raanRad": 0,
+        "periodS": 16188422.4,
+        "transitJd": 2455045.428,
+        "radialVelocityAmplitudeMS": 40609,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 25.033581564063013
+        },
+        "northPoleDec": {
+          "constant": 0.28266627146806544
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 810.7939024
+        }
+      }
+    },
+    "kepler47c": {
+      "id": "kepler47c",
+      "name": "Kepler-47 c",
+      "radiusXM": 29658337.05,
+      "radiusYM": 29658337.05,
+      "radiusZM": 29658337.05,
+      "textureMapUrl": "uranus-map.jpg",
+      "color": 14207208,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "kepler-47",
+      "type": "ice-giant",
+      "mass": 1.89318423e25,
+      "tidallyLocked": false,
+      "keplerianElements": {
+        "semiMajorAxisM": 144182427780.66,
+        "eccentricity": 0.044,
+        "inclinationRad": 1.5741560856049857,
+        "argPeriapsisRad": 5.340707511102648,
+        "raanRad": 0,
+        "periodS": 26198812.8,
+        "transitJd": 2454944.362,
+        "radialVelocityAmplitudeMS": 34612,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 25.033581564063013
+        },
+        "northPoleDec": {
+          "constant": 0.28266627146806544
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 536.3128492
+        }
+      }
     }
   },
   "catalogOrder": [
@@ -17160,6 +17345,11 @@
     "kepler16A",
     "kepler16B",
     "kepler16b",
+    "kepler47A",
+    "kepler47B",
+    "kepler47b",
+    "kepler47d",
+    "kepler47c",
     "mercury",
     "venus",
     "earth",

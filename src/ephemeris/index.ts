@@ -56,6 +56,14 @@ export {
   kepler16DirectionFromSolIcrf,
 } from "./kepler16Frame";
 export {
+  KEPLER47_DEC_DEG,
+  KEPLER47_DISTANCE_LY,
+  KEPLER47_RA_DEG,
+  kepler47BinaryPeriodSeconds,
+  kepler47BinaryStatesInScene,
+  kepler47DirectionFromSolIcrf,
+} from "./kepler47Frame";
+export {
   buildExoplanetSceneBasis,
   clearExoplanetFrameCache,
   exoplanetDirectionFromSolIcrf,

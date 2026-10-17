@@ -27,6 +27,10 @@ import {
   kepler16BinaryOrbitalPoleIcrf,
   kepler16DirectionFromSolIcrf,
 } from "./kepler16Frame";
+import {
+  kepler47BinaryOrbitalPoleIcrf,
+  kepler47DirectionFromSolIcrf,
+} from "./kepler47Frame";
 import { kepler90DirectionFromSolIcrf } from "./kepler90Frame";
 import { trappist1DirectionFromSolIcrf } from "./trappist1Frame";
 
@@ -70,6 +74,8 @@ export function exoplanetDirectionFromSolIcrf(
       return hd80606DirectionFromSolIcrf();
     case "kepler-16":
       return kepler16DirectionFromSolIcrf();
+    case "kepler-47":
+      return kepler47DirectionFromSolIcrf();
     case "sol":
       return new Vector3(1, 0, 0);
   }
@@ -128,8 +134,8 @@ export function skyOrbitalPoleIcrf(
  * Mass-weighted invariable pole for an exoplanet system from catalog Keplerians.
  * Falls back to the sky-frame +Z (toward observer) when no planets are present.
  *
- * HD 80606/07 and Kepler-16: always the binary orbital pole so scene XY is
- * the stellar invariable plane.
+ * HD 80606/07, Kepler-16, and Kepler-47: always the binary orbital pole so
+ * scene XY is the stellar invariable plane.
  */
 export function systemInvariablePoleIcrf(systemId: StellarSystemId): Vector3 {
   if (systemId === "hd-80606") {
@@ -137,6 +143,9 @@ export function systemInvariablePoleIcrf(systemId: StellarSystemId): Vector3 {
   }
   if (systemId === "kepler-16") {
     return kepler16BinaryOrbitalPoleIcrf();
+  }
+  if (systemId === "kepler-47") {
+    return kepler47BinaryOrbitalPoleIcrf();
   }
 
   const direction = exoplanetDirectionFromSolIcrf(systemId);

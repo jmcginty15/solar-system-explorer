@@ -36,7 +36,9 @@ function systemBlurb(id: StellarSystemId): string {
     case "hd-80606":
       return "Wide G8V binary about 215 light-years away in Ursa Major. HD 80606 hosts a highly eccentric hot Jupiter.";
     case "kepler-16":
-      return "Eclipsing K+M binary about 245 light-years away in Cygnus. The two stars orbit a shared barycenter every ~41 days, with Saturn-sized circumbinary planet Kepler-16 b on a ~229-day orbit about the pair.";
+      return "Eclipsing K+M binary about 245 light-years away in Cygnus. The two stars orbit a shared barycenter, with a Saturn-sized circumbinary planet orbiting the pair.";
+    case "kepler-47":
+      return "Eclipsing G+M binary about 3,420 light-years away in Cygnus. The two stars orbit a shared barycenter, hosting three circumbinary planets within an Earth-sized orbit of the system's center.";
   }
 }
 
