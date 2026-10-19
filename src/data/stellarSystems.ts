@@ -100,6 +100,14 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
       // Compact eclipsing binary: pairwise N-body about the mutual COM.
       forceSummationOnly: true,
     },
+    "gliese-876": {
+      id: "gliese-876",
+      name: "Gliese 876",
+      primaryBodyId: "gliese876",
+      defaultFocusId: "gliese-876-system",
+      usesSpk: false,
+      forceSummationOnly: true,
+    },
   };
 
 /**
@@ -133,6 +141,7 @@ export const STELLAR_SYSTEM_ORDER: readonly StellarSystemId[] = [
   "hd-80606",
   "kepler-16",
   "kepler-47",
+  "gliese-876",
 ] as const;
 
 export const DEFAULT_STELLAR_SYSTEM_ID: StellarSystemId = "sol";

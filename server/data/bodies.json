@@ -17297,6 +17297,188 @@
           "perDay": 536.3128492
         }
       }
+    },
+    "gliese876": {
+      "id": "gliese876",
+      "name": "Gliese 876",
+      "radiusXM": 258800400,
+      "radiusYM": 258800400,
+      "radiusZM": 258800400,
+      "textureMapUrl": "trappist1-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 0.01309,
+      "spectralType": "M4V",
+      "starColor": 16738877,
+      "color": 16733491,
+      "stellarSystemId": "gliese-876",
+      "type": "star",
+      "mass": 6.8801235e29,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 163.31971908333333
+        },
+        "northPoleDec": {
+          "constant": 14.263695583333336
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 7.005253940455342
+        }
+      }
+    },
+    "gliese876d": {
+      "id": "gliese876d",
+      "name": "Gliese 876 d",
+      "radiusXM": 11387813.063248727,
+      "radiusYM": 11387813.063248727,
+      "radiusZM": 11387813.063248727,
+      "textureMapUrl": "venus-map.jpg",
+      "color": 15248536,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "stellarSystemId": "gliese-876",
+      "type": "terrestrial-planet",
+      "mass": 4.07900577e25,
+      "tidallyLocked": true,
+      "keplerianElements": {
+        "semiMajorAxisM": 3112630536.400155,
+        "eccentricity": 0.207,
+        "inclinationRad": 1.0297442586766545,
+        "argPeriapsisRad": 4.084070449666731,
+        "raanRad": 0,
+        "periodS": 167424.192,
+        "periastronJd": 2450602.093,
+        "radialVelocityAmplitudeMS": 6.56,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 223.10587939668164
+        },
+        "northPoleDec": {
+          "constant": 7.290355195324703
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 185.7796034637575
+        }
+      }
+    },
+    "gliese876c": {
+      "id": "gliese876c",
+      "name": "Gliese 876 c",
+      "radiusXM": 68835071.31970298,
+      "radiusYM": 68835071.31970298,
+      "radiusZM": 68835071.31970298,
+      "textureMapUrl": "jupiter-map.jpg",
+      "color": 15255184,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "gliese-876",
+      "type": "gas-giant",
+      "mass": 1.355687298e27,
+      "tidallyLocked": true,
+      "keplerianElements": {
+        "semiMajorAxisM": 19386388064.013,
+        "eccentricity": 0.25591,
+        "inclinationRad": 1.0297442586766545,
+        "argPeriapsisRad": 0.8510225432724351,
+        "raanRad": 0,
+        "periodS": 2599611.84,
+        "periastronJd": 2450602.093,
+        "radialVelocityAmplitudeMS": 88.34,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 223.10587939668164
+        },
+        "northPoleDec": {
+          "constant": 7.290355195324703
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 11.964863185113051
+        }
+      }
+    },
+    "gliese876b": {
+      "id": "gliese876b",
+      "name": "Gliese 876 b",
+      "radiusXM": 86155697.88652457,
+      "radiusYM": 86155697.88652457,
+      "radiusZM": 86155697.88652457,
+      "textureMapUrl": "saturn-map.jpg",
+      "color": 14723200,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "gliese-876",
+      "type": "gas-giant",
+      "mass": 4.319521164e27,
+      "tidallyLocked": true,
+      "keplerianElements": {
+        "semiMajorAxisM": 31163779630.6119,
+        "eccentricity": 0.0324,
+        "inclinationRad": 1.0297442586766545,
+        "argPeriapsisRad": 0.8779006137531478,
+        "raanRad": 0,
+        "periodS": 5280474.24,
+        "periastronJd": 2450602.093,
+        "radialVelocityAmplitudeMS": 214,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 223.10587939668164
+        },
+        "northPoleDec": {
+          "constant": 7.290355195324703
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 5.890380027684786
+        }
+      }
+    },
+    "gliese876e": {
+      "id": "gliese876e",
+      "name": "Gliese 876 e",
+      "radiusXM": 25593930.016631536,
+      "radiusYM": 25593930.016631536,
+      "radiusZM": 25593930.016631536,
+      "textureMapUrl": "neptune-map.jpg",
+      "color": 9488616,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "gliese-876",
+      "type": "ice-giant",
+      "mass": 8.7193974e25,
+      "tidallyLocked": true,
+      "keplerianElements": {
+        "semiMajorAxisM": 50010568175.01,
+        "eccentricity": 0.055,
+        "inclinationRad": 1.0297442586766545,
+        "argPeriapsisRad": 4.171336912266447,
+        "raanRad": 0,
+        "periodS": 10736064,
+        "periastronJd": 2450602.093,
+        "radialVelocityAmplitudeMS": 3.42,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 223.10587939668164
+        },
+        "northPoleDec": {
+          "constant": 7.290355195324703
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 2.897151134717528
+        }
+      }
     }
   },
   "catalogOrder": [
@@ -17350,6 +17532,11 @@
     "kepler47b",
     "kepler47d",
     "kepler47c",
+    "gliese876",
+    "gliese876d",
+    "gliese876c",
+    "gliese876b",
+    "gliese876e",
     "mercury",
     "venus",
     "earth",

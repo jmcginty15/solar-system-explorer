@@ -21,7 +21,8 @@ export type StellarBarycenterFocusId =
   | "kepler-90-system"
   | "hd-80606-system"
   | "kepler-16-system"
-  | "kepler-47-system";
+  | "kepler-47-system"
+  | "gliese-876-system";
 
 export type SystemFocusId = StellarBarycenterFocusId | `${BodyId}-system`;
 
@@ -39,6 +40,7 @@ const STELLAR_BARYCENTER_FOCUS_IDS = new Set<string>([
   "hd-80606-system",
   "kepler-16-system",
   "kepler-47-system",
+  "gliese-876-system",
 ]);
 
 /** Whole-star-system barycenter (all bodies), not a planet–moon COM. */
@@ -75,6 +77,8 @@ export function stellarBarycenterFocusId(
       return "kepler-16-system";
     case "kepler-47":
       return "kepler-47-system";
+    case "gliese-876":
+      return "gliese-876-system";
   }
 }
 

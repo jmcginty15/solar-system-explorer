@@ -64,6 +64,12 @@ export {
   kepler47DirectionFromSolIcrf,
 } from "./kepler47Frame";
 export {
+  GLIESE876_DEC_DEG,
+  GLIESE876_DISTANCE_LY,
+  GLIESE876_RA_DEG,
+  gliese876DirectionFromSolIcrf,
+} from "./gliese876Frame";
+export {
   buildExoplanetSceneBasis,
   clearExoplanetFrameCache,
   exoplanetDirectionFromSolIcrf,

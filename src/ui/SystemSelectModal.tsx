@@ -39,6 +39,8 @@ function systemBlurb(id: StellarSystemId): string {
       return "Eclipsing K+M binary about 245 light-years away in Cygnus. The two stars orbit a shared barycenter, with a Saturn-sized circumbinary planet orbiting the pair.";
     case "kepler-47":
       return "Eclipsing G+M binary about 3,420 light-years away in Cygnus. The two stars orbit a shared barycenter, hosting three circumbinary planets within an Earth-sized orbit of the system's center.";
+    case "gliese-876":
+      return "M4V red dwarf about 15.2 light-years away in Aquarius. One of the closest multi-planet systems to the Sun; features significant gravitational interactions between its four planets.";
   }
 }
 
