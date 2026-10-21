@@ -41,6 +41,8 @@ function systemBlurb(id: StellarSystemId): string {
       return "Eclipsing G+M binary about 3,420 light-years away in Cygnus. The two stars orbit a shared barycenter, hosting three circumbinary planets within an Earth-sized orbit of the system's center.";
     case "gliese-876":
       return "M4V red dwarf about 15.2 light-years away in Aquarius. One of the closest multi-planet systems to the Sun; features significant gravitational interactions between its four planets.";
+    case "hd-18438":
+      return "M2.5III red giant about 734 light-years away in Camelopardalis. Currently the largest known star with a planetary companion, nearly large enough to engulf the orbit of Mercury if it were swapped with our Sun.";
   }
 }
 

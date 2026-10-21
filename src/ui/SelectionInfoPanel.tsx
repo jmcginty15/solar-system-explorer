@@ -23,6 +23,7 @@ import {
   KEPLER47_DISTANCE_LY,
   KEPLER90_DISTANCE_LY,
   GLIESE876_DISTANCE_LY,
+  HD18438_DISTANCE_LY,
   TRAPPIST1_DISTANCE_LY,
   centuriesFromJ2000,
   daysFromJ2000,
@@ -420,6 +421,9 @@ function distanceFromSunLyForBody(bodyId: BodyId): number | undefined {
   ) {
     return GLIESE876_DISTANCE_LY;
   }
+  if (bodyId === "hd18438" || bodyId === "hd18438b") {
+    return HD18438_DISTANCE_LY;
+  }
   return undefined;
 }
 
@@ -541,7 +545,9 @@ function stellarSystemInfo(
                     ? { distanceFromSunLy: KEPLER47_DISTANCE_LY }
                     : stellarId === "gliese-876"
                       ? { distanceFromSunLy: GLIESE876_DISTANCE_LY }
-                      : {}),
+                      : stellarId === "hd-18438"
+                        ? { distanceFromSunLy: HD18438_DISTANCE_LY }
+                        : {}),
     planetCount,
     ...(stellarId === "sol" ? { dwarfPlanetCount } : {}),
     totalMassKg: availableBodiesTotalMassKg(available),

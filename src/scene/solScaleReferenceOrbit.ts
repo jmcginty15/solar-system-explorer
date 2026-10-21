@@ -168,6 +168,32 @@ export function solScaleReferenceBodyId(systemId: StellarSystemId): BodyId {
   return best;
 }
 
+export type SolScaleReferenceSpec = {
+  bodyId: BodyId;
+  /** Line/label tint. Falls back to the body's catalog color. */
+  colorHex?: number;
+};
+
+/**
+ * Scale ellipses for a system. HD 18438 keeps the outer Jupiter match and
+ * adds Venus (~0.72 AU) and Mercury (~0.39 AU) so the giant's radius can be
+ * read against nearby Solar System orbits.
+ */
+export function solScaleReferenceSpecs(
+  systemId: StellarSystemId,
+): SolScaleReferenceSpec[] {
+  const primary = solScaleReferenceBodyId(systemId);
+  if (systemId !== "hd-18438") return [{ bodyId: primary }];
+  const extras: SolScaleReferenceSpec[] = [
+    { bodyId: "venus", colorHex: 0xe6c07a },
+    { bodyId: "mercury", colorHex: 0xb7c4d4 },
+  ];
+  return [
+    { bodyId: primary },
+    ...extras.filter((spec) => spec.bodyId !== primary),
+  ];
+}
+
 /** World-space focus for the Sol scale ellipse (host star or system COM). */
 export function solScaleReferenceCenterBodyId(
   systemId: StellarSystemId,
@@ -393,9 +419,10 @@ export async function solPlanetHeliocentricElementsAtEpoch(
 export function attachSolScaleReferenceOrbit(
   scene: Scene,
   bodyId: BodyId = "mercury",
+  colorHex?: number,
 ): SolScaleReferenceOrbit {
   const root = new Group();
-  root.name = "sol-scale-reference-orbit";
+  root.name = `sol-scale-reference-orbit-${bodyId}`;
   scene.add(root);
 
   const positions = new Float32Array((ELLIPSE_SEGMENTS + 1) * 3);
@@ -404,7 +431,8 @@ export function attachSolScaleReferenceOrbit(
 
   const catalog = BODIES[bodyId];
   const color =
-    typeof catalog?.color === "number" ? catalog.color : REFERENCE_COLOR_HEX;
+    colorHex ??
+    (typeof catalog?.color === "number" ? catalog.color : REFERENCE_COLOR_HEX);
   const material = new LineDashedMaterial({
     color,
     dashSize: MERCURY_DASH_SIZE_M,

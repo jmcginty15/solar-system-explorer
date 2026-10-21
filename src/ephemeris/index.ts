@@ -70,6 +70,12 @@ export {
   gliese876DirectionFromSolIcrf,
 } from "./gliese876Frame";
 export {
+  HD18438_DEC_DEG,
+  HD18438_DISTANCE_LY,
+  HD18438_RA_DEG,
+  hd18438DirectionFromSolIcrf,
+} from "./hd18438Frame";
+export {
   buildExoplanetSceneBasis,
   clearExoplanetFrameCache,
   exoplanetDirectionFromSolIcrf,

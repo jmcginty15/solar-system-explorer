@@ -108,6 +108,14 @@ export const STELLAR_SYSTEMS: Record<StellarSystemId, StellarSystemDefinition> =
       usesSpk: false,
       forceSummationOnly: true,
     },
+    "hd-18438": {
+      id: "hd-18438",
+      name: "HD 18438",
+      primaryBodyId: "hd18438",
+      defaultFocusId: "hd-18438-system",
+      usesSpk: false,
+      forceSummationOnly: true,
+    },
   };
 
 /**
@@ -142,6 +150,7 @@ export const STELLAR_SYSTEM_ORDER: readonly StellarSystemId[] = [
   "kepler-16",
   "kepler-47",
   "gliese-876",
+  "hd-18438",
 ] as const;
 
 export const DEFAULT_STELLAR_SYSTEM_ID: StellarSystemId = "sol";

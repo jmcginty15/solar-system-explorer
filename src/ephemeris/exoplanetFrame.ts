@@ -32,6 +32,7 @@ import {
   kepler47DirectionFromSolIcrf,
 } from "./kepler47Frame";
 import { gliese876DirectionFromSolIcrf } from "./gliese876Frame";
+import { hd18438DirectionFromSolIcrf } from "./hd18438Frame";
 import { kepler90DirectionFromSolIcrf } from "./kepler90Frame";
 import { trappist1DirectionFromSolIcrf } from "./trappist1Frame";
 
@@ -79,6 +80,8 @@ export function exoplanetDirectionFromSolIcrf(
       return kepler47DirectionFromSolIcrf();
     case "gliese-876":
       return gliese876DirectionFromSolIcrf();
+    case "hd-18438":
+      return hd18438DirectionFromSolIcrf();
     case "sol":
       return new Vector3(1, 0, 0);
   }

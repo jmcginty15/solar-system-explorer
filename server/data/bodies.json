@@ -17479,6 +17479,74 @@
           "perDay": 2.897151134717528
         }
       }
+    },
+    "hd18438": {
+      "id": "hd18438",
+      "name": "HD 18438",
+      "radiusXM": 61552057500,
+      "radiusYM": 61552057500,
+      "radiusZM": 61552057500,
+      "textureMapUrl": "sun-map.jpg",
+      "specularMapUrl": "sun-spec-map.jpg",
+      "gasGiantEffects": false,
+      "glowAndLight": true,
+      "luminosityLSun": 929,
+      "spectralType": "M2.5III",
+      "starColor": 16756832,
+      "color": 15241296,
+      "stellarSystemId": "hd-18438",
+      "type": "star",
+      "mass": 3.658794e30,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 136.532668875
+        },
+        "northPoleDec": {
+          "constant": 0
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 0.4423402812264516
+        }
+      }
+    },
+    "hd18438b": {
+      "id": "hd18438b",
+      "name": "HD 18438 b",
+      "radiusXM": 71488000,
+      "radiusYM": 71488000,
+      "radiusZM": 71488000,
+      "textureMapUrl": "jupiter-map.jpg",
+      "color": 11561048,
+      "gasGiantEffects": true,
+      "glowAndLight": false,
+      "stellarSystemId": "hd-18438",
+      "type": "gas-giant",
+      "mass": 3.986199e28,
+      "tidallyLocked": false,
+      "keplerianElements": {
+        "semiMajorAxisM": 314155528470,
+        "eccentricity": 0.1,
+        "inclinationRad": 1.5707963267948966,
+        "argPeriapsisRad": 2.91469985083053,
+        "raanRad": 0,
+        "periodS": 69379200,
+        "periastronJd": 2455367,
+        "radialVelocityAmplitudeMS": 305,
+        "referencePlane": "sky"
+      },
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 136.532668875
+        },
+        "northPoleDec": {
+          "constant": 0
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 870.536
+        }
+      }
     }
   },
   "catalogOrder": [
@@ -17537,6 +17605,8 @@
     "gliese876c",
     "gliese876b",
     "gliese876e",
+    "hd18438",
+    "hd18438b",
     "mercury",
     "venus",
     "earth",

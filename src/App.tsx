@@ -68,9 +68,9 @@ import {
   attachSolScaleReferenceOrbit,
   hd80606SubsystemOrientation,
   solPlanetHeliocentricElementsAtEpoch,
-  solScaleReferenceBodyId,
   solScaleReferenceCenterBodyId,
   solScaleReferenceLodMemberId,
+  solScaleReferenceSpecs,
   type SolScaleReferenceOrbit,
 } from "./scene/solScaleReferenceOrbit";
 import {
@@ -642,7 +642,7 @@ export default function App() {
     let visibilityEntries: BodyVisibilityEntry[] = [];
     let bodyLabels: BodyLabels | null = null;
     let bodyOrbits: BodyOrbits | null = null;
-    let solScaleReferenceOrbit: SolScaleReferenceOrbit | null = null;
+    let solScaleReferenceOrbits: SolScaleReferenceOrbit[] = [];
     let tidalLockById = new Map<BodyId, TidalLockRuntime>();
     const tidalLockOrientation = new Quaternion();
     let loadGeneration = 0;
@@ -666,26 +666,16 @@ export default function App() {
     };
 
     const updateSolScaleReferenceCenter = (bodies: readonly NbodyBody[]) => {
-      if (!solScaleReferenceOrbit || bodies.length === 0) return;
+      if (solScaleReferenceOrbits.length === 0 || bodies.length === 0) return;
       const centerBodyId = solScaleReferenceCenterBodyId(stellarSystemId);
       const centerBody = centerBodyId
         ? bodies.find((body) => body.id === centerBodyId)
         : null;
-      if (centerBody) {
-        solScaleReferenceOrbit.setCenter(
-          centerBody.state.positionM.x,
-          centerBody.state.positionM.y,
-          centerBody.state.positionM.z,
-        );
-        return;
-      }
-      const bary = solarSystemBarycenterFrame(bodies);
-      if (bary) {
-        solScaleReferenceOrbit.setCenter(
-          bary.positionM.x,
-          bary.positionM.y,
-          bary.positionM.z,
-        );
+      const bary = centerBody ? null : solarSystemBarycenterFrame(bodies);
+      const center = centerBody ? centerBody.state.positionM : bary?.positionM;
+      if (!center) return;
+      for (const orbit of solScaleReferenceOrbits) {
+        orbit.setCenter(center.x, center.y, center.z);
       }
     };
 
@@ -1030,14 +1020,16 @@ export default function App() {
           camera,
           viewportHeightPx,
         });
-        if (solScaleReferenceOrbit) {
+        if (solScaleReferenceOrbits.length > 0) {
           updateSolScaleReferenceCenter(nbodyBodies);
-          solScaleReferenceOrbit.update(
-            camera,
-            viewportHeightPx,
-            nbodyBodies,
-            solScaleReferenceLodMemberId(stellarSystemId),
-          );
+          for (const orbit of solScaleReferenceOrbits) {
+            orbit.update(
+              camera,
+              viewportHeightPx,
+              nbodyBodies,
+              solScaleReferenceLodMemberId(stellarSystemId),
+            );
+          }
         }
       }
       updateCameraClipPlanes(
@@ -1408,9 +1400,10 @@ export default function App() {
           bodyOrbitsRef.current = bodyOrbits;
 
           if (!systemDef.usesSpk) {
-            solScaleReferenceOrbit = attachSolScaleReferenceOrbit(
-              scene,
-              solScaleReferenceBodyId(stellarSystemId),
+            solScaleReferenceOrbits = solScaleReferenceSpecs(
+              stellarSystemId,
+            ).map((spec) =>
+              attachSolScaleReferenceOrbit(scene, spec.bodyId, spec.colorHex),
             );
           }
 
@@ -1429,36 +1422,47 @@ export default function App() {
         syncSceneFromNbody();
         if (cancelled || generation !== loadGeneration) return;
 
-        if (solScaleReferenceOrbit) {
-          const referenceBodyId = solScaleReferenceBodyId(stellarSystemId);
-          try {
-            const referenceElements =
-              await solPlanetHeliocentricElementsAtEpoch(referenceBodyId, jd);
-            if (cancelled || generation !== loadGeneration) return;
-            if (referenceElements) {
-              const subsystem =
-                stellarSystemId === "hd-80606"
-                  ? hd80606SubsystemOrientation(nbodyBodies)
-                  : null;
-              solScaleReferenceOrbit.setElements(
-                subsystem
-                  ? alignSolScaleElementsToSubsystemPlane(
-                      referenceElements,
-                      subsystem,
-                    )
-                  : referenceElements,
-              );
-              updateSolScaleReferenceCenter(nbodyBodies);
-            } else {
-              solScaleReferenceOrbit.setVisible(false);
-            }
-          } catch (error) {
-            console.warn(
-              `${referenceBodyId} scale-reference orbit unavailable (SPK fetch failed)`,
-              error,
-            );
-            solScaleReferenceOrbit.setVisible(false);
-          }
+        if (solScaleReferenceOrbits.length > 0) {
+          const referenceSpecs = solScaleReferenceSpecs(stellarSystemId);
+          const subsystem =
+            stellarSystemId === "hd-80606"
+              ? hd80606SubsystemOrientation(nbodyBodies)
+              : null;
+          await Promise.all(
+            solScaleReferenceOrbits.map(async (orbit, index) => {
+              const referenceBodyId = referenceSpecs[index]?.bodyId;
+              if (!referenceBodyId) return;
+              try {
+                const referenceElements =
+                  await solPlanetHeliocentricElementsAtEpoch(
+                    referenceBodyId,
+                    jd,
+                  );
+                if (cancelled || generation !== loadGeneration) return;
+                if (referenceElements) {
+                  orbit.setElements(
+                    subsystem
+                      ? alignSolScaleElementsToSubsystemPlane(
+                          referenceElements,
+                          subsystem,
+                        )
+                      : referenceElements,
+                  );
+                } else {
+                  orbit.setVisible(false);
+                }
+              } catch (error) {
+                if (cancelled || generation !== loadGeneration) return;
+                console.warn(
+                  `${referenceBodyId} scale-reference orbit unavailable (SPK fetch failed)`,
+                  error,
+                );
+                orbit.setVisible(false);
+              }
+            }),
+          );
+          if (cancelled || generation !== loadGeneration) return;
+          updateSolScaleReferenceCenter(nbodyBodies);
         }
 
         // System foci need nbodyBodies for COM / orbit scale; apply after create.
@@ -1499,8 +1503,8 @@ export default function App() {
       bodyOrbits?.dispose();
       bodyOrbits = null;
       bodyOrbitsRef.current = null;
-      solScaleReferenceOrbit?.dispose();
-      solScaleReferenceOrbit = null;
+      for (const orbit of solScaleReferenceOrbits) orbit.dispose();
+      solScaleReferenceOrbits = [];
       const disposedTextures = new Set<import("three").Texture>();
       scene.traverse((object) => {
         if (object instanceof Mesh) {
