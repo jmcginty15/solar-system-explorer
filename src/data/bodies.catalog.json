@@ -276,6 +276,31 @@
         }
       }
     },
+    "juno": {
+      "id": "juno",
+      "name": "3 Juno (A804 RA)",
+      "radiusXM": 144000,
+      "radiusYM": 125000,
+      "radiusZM": 112500,
+      "color": 10127472,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 27190000000000000000,
+      "albedo": 0.214,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 108.8762
+        },
+        "northPoleDec": {
+          "constant": 40.4614
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1198.4136
+        }
+      }
+    },
     "vesta": {
       "id": "vesta",
       "name": "4 Vesta (A807 FA)",
@@ -300,6 +325,281 @@
         "primeMeridian": {
           "constant": 286.15,
           "perDay": 1617.33277
+        }
+      }
+    },
+    "astraea": {
+      "id": "astraea",
+      "name": "5 Astraea (A845 XA)",
+      "radiusXM": 84500,
+      "radiusYM": 62500,
+      "radiusZM": 41500,
+      "color": 10127988,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 2290000000000000000,
+      "albedo": 0.227,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 143.1774
+        },
+        "northPoleDec": {
+          "constant": 56.1620
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 514.2673
+        }
+      }
+    },
+    "hebe": {
+      "id": "hebe",
+      "name": "6 Hebe (A847 NA)",
+      "radiusXM": 110000,
+      "radiusYM": 102500,
+      "radiusZM": 83000,
+      "color": 10259574,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 12360000000000000000,
+      "albedo": 0.268,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 321.4607
+        },
+        "northPoleDec": {
+          "constant": 38.5957
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1187.7159
+        }
+      }
+    },
+    "iris": {
+      "id": "iris",
+      "name": "7 Iris (A847 PA)",
+      "radiusXM": 130000,
+      "radiusYM": 112500,
+      "radiusZM": 75000,
+      "color": 10521720,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 14560000000000000000,
+      "albedo": 0.2766,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 8.7690
+        },
+        "northPoleDec": {
+          "constant": 28.9287
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1210.2802
+        }
+      }
+    },
+    "flora": {
+      "id": "flora",
+      "name": "8 Flora (A847 UA)",
+      "radiusXM": 77000,
+      "radiusYM": 74000,
+      "radiusZM": 63500,
+      "color": 10390134,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 4540000000000000000,
+      "albedo": 0.226,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 339.0979
+        },
+        "northPoleDec": {
+          "constant": -9.8700
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 671.5024
+        }
+      }
+    },
+    "metis9": {
+      "id": "metis9",
+      "name": "9 Metis (A848 HA)",
+      "radiusXM": 109000,
+      "radiusYM": 88000,
+      "radiusZM": 66500,
+      "color": 9075820,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 6490000000000000000,
+      "albedo": 0.118,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 190.0236
+        },
+        "northPoleDec": {
+          "constant": 19.7099
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1701.0633
+        }
+      }
+    },
+    "hygiea": {
+      "id": "hygiea",
+      "name": "10 Hygiea (A849 GA)",
+      "radiusXM": 225000,
+      "radiusYM": 215000,
+      "radiusZM": 212000,
+      "color": 3815476,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 8237000000000000000,
+      "albedo": 0.063,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 318.4051
+        },
+        "northPoleDec": {
+          "constant": -46.5741
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 624.9281
+        }
+      }
+    },
+    "parthenope": {
+      "id": "parthenope",
+      "name": "11 Parthenope (A850 JA)",
+      "radiusXM": 78000,
+      "radiusYM": 76000,
+      "radiusZM": 69000,
+      "color": 9865336,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 4850000000000000000,
+      "albedo": 0.191,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 309.7888
+        },
+        "northPoleDec": {
+          "constant": -0.8276
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 629.6440
+        }
+      }
+    },
+    "victoria": {
+      "id": "victoria",
+      "name": "12 Victoria (A850 RA)",
+      "radiusXM": 70000,
+      "radiusYM": 58000,
+      "radiusZM": 48000,
+      "color": 9338992,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 1830000000000000000,
+      "albedo": 0.163,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 165.9077
+        },
+        "northPoleDec": {
+          "constant": -23.4519
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 997.7021
+        }
+      }
+    },
+    "egeria": {
+      "id": "egeria",
+      "name": "13 Egeria (A850 VA)",
+      "radiusXM": 119000,
+      "radiusYM": 99500,
+      "radiusZM": 91000,
+      "color": 3683890,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 7240000000000000000,
+      "albedo": 0.049,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 22.4655
+        },
+        "northPoleDec": {
+          "constant": 43.0358
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1226.4017
+        }
+      }
+    },
+    "irene": {
+      "id": "irene",
+      "name": "14 Irene (A851 KA)",
+      "radiusXM": 83500,
+      "radiusYM": 76000,
+      "radiusZM": 69500,
+      "color": 9076852,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 5260000000000000000,
+      "albedo": 0.159,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 90.9836
+        },
+        "northPoleDec": {
+          "constant": 9.4359
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 574.8549
+        }
+      }
+    },
+    "eunomia": {
+      "id": "eunomia",
+      "name": "15 Eunomia (A851 OA)",
+      "radiusXM": 170000,
+      "radiusYM": 124000,
+      "radiusZM": 114500,
+      "color": 9339508,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 31190000000000000000,
+      "albedo": 0.163,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 45.4770
+        },
+        "northPoleDec": {
+          "constant": -60.9278
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1420.4095
         }
       }
     },
@@ -17613,7 +17913,19 @@
     "mars",
     "ceres",
     "pallas",
+    "juno",
     "vesta",
+    "astraea",
+    "hebe",
+    "iris",
+    "flora",
+    "metis9",
+    "hygiea",
+    "parthenope",
+    "victoria",
+    "egeria",
+    "irene",
+    "eunomia",
     "psyche",
     "lutetia",
     "kalliope",

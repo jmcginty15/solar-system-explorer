@@ -21,12 +21,17 @@ import {
   filterBodyFocusGroups,
   flattenBodyFocusIds,
   focusTreeParentId,
+  groupEntryFocusIds,
+  groupExpandKey,
+  groupExpandKeyForFocusId,
+  groupIsCollapsible,
   satelliteGroupExpandKey,
   satelliteGroupExpandKeyForBody,
   satelliteGroupSections,
   satelliteSectionsShowLabels,
   ungroupedSatellites,
   type BodyFocusEntry,
+  type BodyFocusGroup,
   type FocusId,
   type SatelliteGroupSection,
 } from "./bodyFocusGroups";
@@ -182,7 +187,8 @@ export function BodyFocusPicker({
     });
     const parentId = focusTreeParentId(tree, value);
     const satKey = satelliteGroupExpandKeyForBody(tree, value);
-    if (parentId || satKey) {
+    const sectionKey = groupExpandKeyForFocusId(tree, value);
+    if (parentId || satKey || sectionKey) {
       setExpanded((prev) => {
         let changed = false;
         const next = new Set(prev);
@@ -195,6 +201,10 @@ export function BodyFocusPicker({
         }
         if (satKey && !next.has(satKey)) {
           next.add(satKey);
+          changed = true;
+        }
+        if (sectionKey && !next.has(sectionKey)) {
+          next.add(sectionKey);
           changed = true;
         }
         return changed ? next : prev;
@@ -429,6 +439,62 @@ export function BodyFocusPicker({
           </ul>
         )}
       </li>
+    );
+  };
+
+  const renderCollapsibleGroup = (group: BodyFocusGroup) => {
+    const sectionKey = groupExpandKey(group.id);
+    const isSectionExpanded = searching || expanded.has(sectionKey);
+    const sectionListId = `${listId}-${sectionKey}-members`;
+    const scopeIds = groupEntryFocusIds(group);
+    const count = group.entries.length;
+
+    return (
+      <section
+        key={group.id}
+        className={
+          "focus-picker-group is-collapsible" +
+          (isSectionExpanded ? " is-expanded" : "")
+        }
+      >
+        <div className="focus-picker-group-header">
+          <div className="focus-picker-row is-group-header-row">
+            {renderTwistie(
+              isSectionExpanded,
+              sectionListId,
+              group.label,
+              () => {
+                if (!searching) toggleExpanded(sectionKey);
+              },
+            )}
+            {renderScopeToggles(scopeIds, group.label)}
+            <button
+              type="button"
+              className="focus-picker-group-toggle"
+              aria-expanded={isSectionExpanded}
+              aria-controls={sectionListId}
+              onClick={(event) => {
+                event.stopPropagation();
+                if (!searching) toggleExpanded(sectionKey);
+              }}
+            >
+              <span className="focus-picker-group-toggle-label">
+                {group.label}
+              </span>
+              <span className="focus-picker-moon-count">{count}</span>
+            </button>
+          </div>
+        </div>
+        {isSectionExpanded ? (
+          <ul
+            id={sectionListId}
+            className="focus-picker-group-list"
+            aria-label={group.label}
+          >
+            {group.entries.map((entry) => renderEntry(entry))}
+          </ul>
+        ) : null}
+      </section>
     );
   };
 
@@ -696,21 +762,28 @@ export function BodyFocusPicker({
             {groups.length === 0 ? (
               <p className="focus-picker-empty">No matches</p>
             ) : (
-              groups.map((group) => (
-                <section
-                  key={group.id}
-                  className={
-                    "focus-picker-group" + (group.label ? "" : " is-unlabeled")
-                  }
-                >
-                  {group.label ? (
-                    <h3 className="focus-picker-group-label">{group.label}</h3>
-                  ) : null}
-                  <ul className="focus-picker-group-list">
-                    {group.entries.map((entry) => renderEntry(entry))}
-                  </ul>
-                </section>
-              ))
+              groups.map((group) =>
+                groupIsCollapsible(group.id) ? (
+                  renderCollapsibleGroup(group)
+                ) : (
+                  <section
+                    key={group.id}
+                    className={
+                      "focus-picker-group" +
+                      (group.label ? "" : " is-unlabeled")
+                    }
+                  >
+                    {group.label ? (
+                      <h3 className="focus-picker-group-label">
+                        {group.label}
+                      </h3>
+                    ) : null}
+                    <ul className="focus-picker-group-list">
+                      {group.entries.map((entry) => renderEntry(entry))}
+                    </ul>
+                  </section>
+                ),
+              )
             )}
           </div>
         </div>

@@ -56,6 +56,46 @@ export type BodyFocusGroup = {
   entries: BodyFocusEntry[];
 };
 
+/** Top-level picker sections that collapse as a unit (with group toggles). */
+const COLLAPSIBLE_GROUP_IDS = new Set(["asteroids"]);
+
+/** Whether this catalog section uses a collapsible header + scope toggles. */
+export function groupIsCollapsible(groupId: string): boolean {
+  return COLLAPSIBLE_GROUP_IDS.has(groupId);
+}
+
+/** Expand-set key for a collapsible top-level section (e.g. Asteroids). */
+export function groupExpandKey(groupId: string): string {
+  return `group:${groupId}`;
+}
+
+/** Focus ids whose tags/orbits the section-level toggles control. */
+export function groupEntryFocusIds(group: BodyFocusGroup): FocusId[] {
+  return group.entries.map((entry) => entryHeaderId(entry));
+}
+
+/**
+ * Expand-set key for the collapsible section containing `focusId`, if any.
+ * Used to auto-open Asteroids (etc.) when focusing a member.
+ */
+export function groupExpandKeyForFocusId(
+  groups: readonly BodyFocusGroup[],
+  focusId: FocusId,
+): string | null {
+  for (const group of groups) {
+    if (!groupIsCollapsible(group.id)) continue;
+    for (const entry of group.entries) {
+      if (entryHeaderId(entry) === focusId) {
+        return groupExpandKey(group.id);
+      }
+      if (entryNestedBodies(entry).some((body) => body.id === focusId)) {
+        return groupExpandKey(group.id);
+      }
+    }
+  }
+  return null;
+}
+
 export type BuildBodyFocusGroupsOptions = {
   /** Bodies with ephemeris / scene presence. Omit to include the full catalog. */
   availableBodyIds?: ReadonlySet<BodyId> | null;
@@ -768,7 +808,8 @@ export function filterBodyFocusGroups(
  * Visible focus ids in display order. Nested primary + moons are included only
  * when their header id is in `expandedParentIds` (or always when `expandAll`).
  * Named moon groups are nested a level deeper and use
- * {@link satelliteGroupExpandKey} entries in the same set.
+ * {@link satelliteGroupExpandKey} entries in the same set. Collapsible
+ * top-level sections (e.g. Asteroids) are omitted entirely until expanded.
  */
 export function flattenBodyFocusIds(
   groups: readonly BodyFocusGroup[],
@@ -777,6 +818,13 @@ export function flattenBodyFocusIds(
 ): FocusId[] {
   const ids: FocusId[] = [];
   for (const group of groups) {
+    if (
+      groupIsCollapsible(group.id) &&
+      !expandAll &&
+      !expandedParentIds.has(groupExpandKey(group.id))
+    ) {
+      continue;
+    }
     for (const entry of group.entries) {
       const headerId = entryHeaderId(entry);
       const headerKey = String(headerId);

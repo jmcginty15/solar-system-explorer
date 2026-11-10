@@ -1233,6 +1233,65 @@ body {
   -webkit-backdrop-filter: blur(6px);
 }
 
+.focus-picker-group-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 4px 6px 4px;
+  background: rgba(6, 10, 16, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.focus-picker-row.is-group-header-row {
+  padding: 2px 4px 2px 0;
+  border-radius: 6px;
+  background: rgba(142, 180, 196, 0.06);
+  border: 1px solid rgba(142, 180, 196, 0.12);
+}
+
+.focus-picker-group.is-collapsible.is-expanded
+  .focus-picker-row.is-group-header-row {
+  border-color: rgba(142, 180, 196, 0.22);
+  background: rgba(142, 180, 196, 0.1);
+}
+
+.focus-picker-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 4px 8px 4px 2px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--hud-muted);
+  cursor: pointer;
+  text-align: left;
+}
+
+.focus-picker-group-toggle:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--hud-accent);
+}
+
+.focus-picker-group-toggle-label {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
 .focus-picker-group-list {
   list-style: none;
   margin: 0;
