@@ -628,6 +628,106 @@
         }
       }
     },
+    "thetis": {
+      "id": "thetis",
+      "name": "17 Thetis (A852 HA)",
+      "radiusXM": 38500,
+      "radiusYM": 38500,
+      "radiusZM": 38500,
+      "color": 9865336,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 570000000000000000,
+      "albedo": 0.193,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 238.2999
+        },
+        "northPoleDec": {
+          "constant": 0.2242
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 704.1565
+        }
+      }
+    },
+    "melpomene": {
+      "id": "melpomene",
+      "name": "18 Melpomene (A852 MA)",
+      "radiusXM": 38500,
+      "radiusYM": 38500,
+      "radiusZM": 38500,
+      "color": 10127480,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 570000000000000000,
+      "albedo": 0.193,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 238.2999
+        },
+        "northPoleDec": {
+          "constant": 0.2242
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 704.1565
+        }
+      }
+    },
+    "fortuna": {
+      "id": "fortuna",
+      "name": "19 Fortuna (A852 QA)",
+      "radiusXM": 121000,
+      "radiusYM": 101500,
+      "radiusZM": 96000,
+      "color": 3420720,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 8530000000000000000,
+      "albedo": 0.037,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 137.6572
+        },
+        "northPoleDec": {
+          "constant": 81.2471
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1160.7873
+        }
+      }
+    },
+    "massalia": {
+      "id": "massalia",
+      "name": "20 Massalia (A852 SA)",
+      "radiusXM": 80000,
+      "radiusYM": 72500,
+      "radiusZM": 66000,
+      "color": 10127990,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 4330000000000000000,
+      "albedo": 0.21,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 197.0219
+        },
+        "northPoleDec": {
+          "constant": 35.6467
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1066.9301
+        }
+      }
+    },
     "lutetia": {
       "id": "lutetia",
       "name": "21 Lutetia (A852 VA)",
@@ -675,6 +775,56 @@
         "primeMeridian": {
           "constant": 356,
           "perDay": 1546.54
+        }
+      }
+    },
+    "thalia": {
+      "id": "thalia",
+      "name": "23 Thalia (A852 XA)",
+      "radiusXM": 60000,
+      "radiusYM": 60000,
+      "radiusZM": 60000,
+      "color": 10521720,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 2160000000000000000,
+      "albedo": 0.2536,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 141.8687
+        },
+        "northPoleDec": {
+          "constant": -32.0154
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 701.7310
+        }
+      }
+    },
+    "themis": {
+      "id": "themis",
+      "name": "24 Themis (A853 GA)",
+      "radiusXM": 116000,
+      "radiusYM": 110000,
+      "radiusZM": 88000,
+      "color": 3814960,
+      "gasGiantEffects": false,
+      "glowAndLight": false,
+      "type": "asteroid",
+      "mass": 6850000000000000000,
+      "albedo": 0.067,
+      "iauOrientation": {
+        "northPoleRa": {
+          "constant": 223.5470
+        },
+        "northPoleDec": {
+          "constant": 70.4630
+        },
+        "primeMeridian": {
+          "constant": 0,
+          "perDay": 1031.7419
         }
       }
     },
@@ -17927,8 +18077,14 @@
     "irene",
     "eunomia",
     "psyche",
+    "thetis",
+    "melpomene",
+    "fortuna",
+    "massalia",
     "lutetia",
     "kalliope",
+    "thalia",
+    "themis",
     "eugenia",
     "sylvia",
     "antiope",

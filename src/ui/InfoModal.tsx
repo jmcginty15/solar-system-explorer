@@ -118,7 +118,7 @@ export function InfoModal({ open, onClose }: Props) {
                   NASA Exoplanet Archive
                 </a>
                 . Data for extrasolar systems is necessarily more speculative
-                and less precise that for our own solar system.
+                and less precise than that for our own solar system.
               </p>
               <p>
                 For questions, comments, or bug reports,{" "}
